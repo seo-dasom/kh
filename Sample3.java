@@ -3,25 +3,26 @@ package com.kh.exam01;
 import java.util.Scanner;
 
 public class Sample3 {
-
+	
 	public static void main(String[] args) {
-		int age = 0;
-		double weight = 0.0;
-		String name;
+		/*
+		 * 두 개의 정수 값을 입력 받은 후 num1이 num2의
+		 * 배수인지 확인하는 코드
+		 */
+		int num1, num2;
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.print("나이를 입력하세요 : ");
-		age = sc.nextInt();
+		System.out.print("정수 1 : ");
+		num1 = sc.nextInt();
 		
-		System.out.print("체중을 입력하세요 : ");
-		weight = sc.nextDouble();
+		System.out.print("정수 2 : ");
+		num2 = sc.nextInt();
 		
-		System.out.print("이름을 입력하세요 : ");
-		name = sc.next();
-		
-		System.out.println("당신의 나이는 " + age + "세 입니다.");
-		System.out.println("당신의 체중은 " + weight + "kg 입니다.");
-		System.out.println("당신의 이름은 " + name + " 입니다.");
+		if(num1 % num2 == 0) {
+			System.out.printf("%d는 %d의 배수 입니다.", num1, num2);
+		} else {
+			System.out.printf("%d는 %d의 배수 아닙니다.", num1, num2);
+		}
 		
 		sc.close();
 	}
