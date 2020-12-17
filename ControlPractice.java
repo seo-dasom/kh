@@ -279,34 +279,46 @@ public class ControlPractice {
 	}
 	public static void practice9() {
 		// 9번 문제
-		int mid, fin, hw, attend;
-		double m, f, h, a, tot;
+		double mid, fin, hw, att_jum, att_rate, tot;
+		int att;
 		
 		System.out.print("중간고사 점수 : ");
-		mid = sc.nextInt();
+		mid = sc.nextDouble();
 		System.out.print("기말고사 점수 : ");
-		fin = sc.nextInt();
+		fin = sc.nextDouble();
 		System.out.print("과제 점수 : ");
-		hw = sc.nextInt();
+		hw = sc.nextDouble();
 		System.out.print("출석 회수 : ");
-		attend = sc.nextInt();
+		att = sc.nextInt();
 		
-		m = mid * 0.2;
-		f = fin * 0.3;
-		h = hw * 0.3;
-		a = attend * 0.2;
-		tot = m + f + h + a;
+		fin = fin / 100 * 30;
+		hw = hw / 100 * 30;
+		mid = mid / 100 * 20;
+		att_jum = att / 20.0 * 20;
+		att_rate = att / 20.0 * 100;
+		tot = mid + fin + hw + att;
 		
 		System.out.println("=================결과=================");
-		System.out.printf("중간고사(20) : %.1f\n", m);
-		System.out.printf("기말고사(30) : %.1f\n", f);
-		System.out.printf("과제점수(30) : %.1f\n", h);
-		System.out.printf("출석점수(20) : %.1f\n", a);
-		System.out.printf("총점 : %.1f", tot);
+		System.out.println("중간고사(20) : " + mid);
+		System.out.println("기말고사(30) : " + fin);
+		System.out.println("과제점수(30) : " + hw);
+		System.out.println("출석점수(20) : " + att_jum);
+		System.out.println("총점 : " + tot);
+		
+		if(tot >= 70) {
+			if(100 - att_rate >= 30) {
+				System.out.println("Fail [출석 부족 " + att + "/20]");
+			} else {
+				System.out.println("PASS");
+			}
+		} else {
+			System.out.println("Fail [점수 미달]");
+		}
 	}
 	public static void practice10() {
 		// 10번 문제
-		char select;
+		
+		int menu;
 		
 		System.out.println("실행할 기능을 선택하세요.");
 		System.out.println("1. 메뉴 출력");
@@ -320,11 +332,11 @@ public class ControlPractice {
 		System.out.println("9. P/F");
 		
 		System.out.print("선택 : ");
-		select = sc.next().charAt(0);
+		menu = sc.nextInt();
 		
-		switch(select) {
+		switch(menu) {
 		case 1 :
-			practice1();
+		    practice1();
 			break;
 		case 2 :
 			practice2();
@@ -355,16 +367,6 @@ public class ControlPractice {
 		}
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//practice1();
-		//practice2();
-		//practice3();
-		//practice4();
-		//practice5();
-		//practice6();
-		//practice7();
-		//practice8();
-		//practice9();
 		practice10();
 		sc.close();
 	}

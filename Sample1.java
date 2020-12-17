@@ -1,128 +1,134 @@
 package com.kh.exam;
 
-import java.util.Scanner;
 public class Sample1 {
-	
-	public static Scanner sc = new Scanner(System.in);
-	
+	// Ctrl + F11 -> 실행
+			// F11        -> 디버깅
+			// F6         -> 1단계 실행
 	public static void func1() {
-		/*
-		 * 사용자 입력으로 정수 값을 입력 받은 후 양수/음수 구분하여 출력
-		 */
-		
-		int num;
-		String res;
-		
-		System.out.print("정수 입력 : ");
-		num = sc.nextInt();
-		
-		if(num > 0) {
-			res = "양수다";
-		} else {
-			res = "양수가 아니다";
+		for(int i = 1; i <= 5; i++) {
+			System.out.println(i + " 번째 출력");
 		}
-		
-		System.out.println(res);
+
 	}
-	
 	public static void func2() {
-		int num;
-		String res;
-		
-		System.out.print("정수 입력 : ");
-		num = sc.nextInt();
-		
-//		if(num > 0) {
-//			res = "양수다";
-//		} else if (num == 0) {
-//			res = "0 이다";
-//		} else {
-//			res = "음수다";
-//		}
-		
-		if(num > 0) {
-			res = "양수다";
-		} else {
-			// 0 을 포함한 음수값
-			if(num == 0) {
-				res = "0이다";
-			} else {
-				res = "음수다";
-			}
+		int i;
+		for(i = 1; i <= 5; i++) {
+			System.out.println(i + " 번째 출력");
 		}
-		
-		System.out.println(res);
+		System.out.println("반복문 밖에서도 i 값 확인 가능 -> " + i);
 	}
 	
 	public static void func3() {
-		String name, gender_name;
-		int lvl, cls, num;
-		char gender;
-		double grade;
-		
-		System.out.print("이름 : ");
-		name = sc.next();
-		
-		System.out.print("학년 : ");
-		lvl = sc.nextInt();
-		
-		System.out.print("반 : ");
-		cls = sc.nextInt();
-		
-		System.out.print("번호 : ");
-		num = sc.nextInt();
-		
-		System.out.print("성별(M/F) : ");
-		gender = sc.next().charAt(0);
-		
-		System.out.print("성적 : ");
-		grade = sc.nextDouble();
-		
-//		if(gender == 'M') {
-//			gender_name = "남학생";
-//		} else if(gender == 'F') {
-//			gender_name = "여학생";
-//		} else {
-//			gender_name = "잘못된 성별 코드";
-//		}
-		
-		switch(gender) {
-		    case'M' :
-		    	gender_name = "남학생"; break;
-		    case'F'	:
-		    	gender_name = "여학생"; break;
-		    default:
-		    	gender_name = "잘못된 성별 코드";
+		int i;
+		for(i = 1; i <= 5;) {
+			System.out.println(i + " 번째 출력");
+			//증감식 및 조건식을 잘못 작성하면 무한반복 발생(주의!)
+			i = i + 2; // for() 문에서 증감식 부분을 생략하고 문장안에 작성 가능
 		}
-		
-		System.out.printf("%d 학년 %d 반 %d 번 %s %s 성적은 %.2f이다.\n", 
-				lvl, cls, num, name, gender_name, grade);
+		System.out.println("반복문 밖에서도 i 값 확인 가능 -> " + i);
 	}
 	
 	public static void func4() {
-		int age;
-		String res;
-		
-		System.out.print("나이 (1 ~ 120) : ");
-		age = sc.nextInt();
-		
-		if(age > 0 && age <= 120) {
-			if(age <= 13) {
-				res = "어린이";
-			} else if(age > 13 && age <= 19) {
-				res ="청소년";
-			} else {
-				res = "성인";
+		// 반복문에 초기값을 생략하고 외부에 초기값 작성
+		int i = 1;
+		for(; i <= 5;) {
+			System.out.println(i + " 번째 출력");
+			//증감식 및 조건식을 잘못 작성하면 무한반복 발생(주의!)
+			i = i + 2; // for() 문에서 증감식 부분을 생략하고 문장안에 작성 가능
+		}
+		System.out.println("반복문 밖에서도 i 값 확인 가능 -> " + i);
+	}
+	
+	public static void func5() {
+		// 반복문에 초기값을 생략하고 외부에 초기값 작성
+		int i = 1;
+		//조건식을 생략, 단 반복문 안에 종료할 수 있는 조건을 만들어야 한다.
+        //무한반복 발생(주의!)
+		for(;;) {
+			System.out.println(i + " 번째 출력");
+			//증감식 및 조건식을 잘못 작성하면 무한반복 발생(주의!)
+			i = i + 2; // for() 문에서 증감식 부분을 생략하고 문장안에 작성 가능
+			if(i > 5) {
+				break;
 			}
-		} else {
-			res = "1 ~ 120 사이의 갑을 입력하세요";
+		}
+		System.out.println("반복문 밖에서도 i 값 확인 가능 -> " + i);
+	}
+	
+	public static void func6() {
+		/*
+		 *  1 ~ 100 까지의 정수값 중 홀수만 출력하는 반복문
+		 */
+		for (int i = 1; i <= 100; i++) {
+			if(i % 2 == 1) {
+				System.out.println(i);	
+			}
 		}
 		
-		System.out.println(res);
+		for (int i = 1; i <= 100; i = i + 2) {
+			System.out.println(i);	
+		}
+		
+		int i = 1;
+		for (;;) {
+			System.out.println(i);
+			i = i + 2;
+			if(i > 100) {
+				break;
+			}
+		}
+	}
+	
+	public static void func7() {
+		/*
+		 *  100 ~ 1 까지의 정수값 중 짝수만 출력하는 반복문
+		 */
+		for(int i = 100; i >= 1; i--) {
+			if(i % 2 == 0) {
+				System.out.println(i);
+			}
+		}
+		
+		for(int i = 100; i >= 1; i = i - 2) {  // 반복 조건
+			System.out.println(i);
+		}
+		
+		int i = 100;
+		for(;;) {
+			System.out.println(i);
+			i = i - 2;
+			if(i < 1) { // 종료 조건
+				break;
+			}
+		}
+	}
+	
+	public static void func8() {
+		/* 중첩 반복문
+		*  1 ~ 9 단 까지 반복 출력 구구단
+		*  1 * 1 = 1  1 * 2 = 2 .... 1 * 9 = 9
+		*  2 * 1 = 2  2 * 2 = 4 ....
+		*  .
+		*  .
+		*  9 * 1 = 9 ...............9 * 9 = 81
+		*/
+		for(int i = 1; i <= 9; i++) {
+			for(int j = 1; j <= 9; j++) {
+				System.out.printf("%d × %d = %d\t", j, i, i * j);
+			}
+			System.out.print("\n");
+		}
 	}
 	
 	public static void main(String[] args) {
-		func1();
+		//func1();
+		//func2();
+		//func3();
+		//func4();
+		//func5();
+		//func6();
+		//func7();
+		func8();
 	}
 
 }
