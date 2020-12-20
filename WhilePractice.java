@@ -2,36 +2,28 @@ package com.kh.practice.chap02;
 
 import java.util.Scanner;
 
-public class LoopPractice {
+public class WhilePractice {
 
 	public static Scanner sc = new Scanner(System.in);
 	
 	public static void practice1() {
+		/*
+		 * 사용자 입력을 받아서 1부터 사용자 입력 값까지 출력
+		 */
 		int num;
+		int i = 1;
 		
 		System.out.print("1이상의 숫자를 입력하세요 : ");
 		num = sc.nextInt();
 		
-		for(int i = 1;;) {
-			if(num < 1) {
-				System.out.println("1이상의 숫자를 입력해주세요.");
-				break;
-			}
-			System.out.print(i++ + " ");
-			
-			if(i >= num) {
-				System.out.print(i);
-				break;
-			}
+		if(num < 1) {
+			System.out.println("1 이상의 숫자를 입력해주세요.");
+		} else {
+			while(i <= num) {
+				System.out.print(i + " ");
+				i++;
+			}	
 		}
-		
-//		if (num >= 1) {
-//			for (int i = 1; i <= num; i++) {
-//				System.out.print(i + " ");
-//			}
-//		} else {
-//			System.out.println("1 이상의 숫자를 입력해주세요.");
-//		}
 	}
 	
 	public static void practice2() {
@@ -42,7 +34,7 @@ public class LoopPractice {
 		 *     2-2. 1 이상이 아니면 계속 반복
 		 */
 		int num = 0;
-		for (;;) {
+		while(true) {   //for(;;) -> 무한 반복
 			System.out.print("1 이상의 숫자를 입력하세요 : ");
 			num = sc.nextInt();
 			if(num >= 1) {
@@ -56,34 +48,36 @@ public class LoopPractice {
 	}
 	
 	public static void practice3() {
-		
 		int num;
 		
-		System.out.println("1이상의 숫자를 입력하세요 : ");
+		System.out.print("1이상의 숫자를 입력하세요 : ");
 		num = sc.nextInt();
 		
-		for(; num > 0; num--) {
-			System.out.print(num + " ");
+		if(num < 1) {
+			System.out.println("1 이상의 숫자를 입력해주세요.");
+		} else {
+			while(num >= 1) {
+				System.out.print(num + " ");
+				num--;
+			}	
 		}
 	}
 	
 	public static void practice4() {
-		
+		/*
+		 * 사용자가 입력한 값까지 정수 출력(역순 출력)
+		 * 1 이상의 숫자를 입력할 때까지 계속 입력받을 수 있게 한다.
+		 */
         int num = 0;
         
-		for(;num <= 0;) {
-			System.out.println("1이상의 숫자를 입력하세요 : ");
-			num = sc.nextInt();
-			
-			if(num >= 1) {
-				break;
-			}
-			
-			System.out.print("잘못된 값을 입력하였습니다.");
-		}
-		
-		for(; num > 0; num--) {
+        do {
+        	System.out.print("1 이상의 숫자를 입력하세요. : ");
+        	num = sc.nextInt();
+        } while(!(num >= 1));  // = (num < 1);
+       
+		while(num >= 1) {
 			System.out.print(num + " ");
+			num--;
 		}
 	}
 	
@@ -274,17 +268,19 @@ public class LoopPractice {
 			System.out.print("정수 2 : ");
 			n2 = sc.nextInt();
 			
-			// 존재하지 않은 연산자를 입력하지 않은 경우 반복 종료
-			if(op == '+' || op == '-' || op == '*' ) {
-				break;
-			} else if(op == '/' || op == '%') {
-				if(n2 != 0) {
-					break;
-				}
-				System.out.println("0 으로 나눌수 없습니다. 다시 입력해주세요.");
-			} else {
+			if(op != '+' && op != '-' && op != '*' && op != '/' && op != '%') {
 				System.out.println("없는 연산자입니다. 다시 입력해주세요.");
+				continue;
 			}
+			
+			if(op == '/' || op == '%') {
+				if(n2 == 0) {
+					System.out.println("0 으로 나눌수 없습니다. 다시 입력해주세요.");
+					continue;
+				}
+			}
+			
+			break;
 		}
 		res = op == '+' ? n1 + n2 : op == '-' ? n1 - n2 : op == '/' ? n1 / n2 :
 			op == '*' ? n1 * n2 : n1 % n2;
@@ -334,7 +330,7 @@ public class LoopPractice {
 		//practice1();
 		//practice2();
 		//practice3();
-		//practice4();
+		practice4();
 		//practice5();
 		//practice6();
 		//practice7();
@@ -344,7 +340,7 @@ public class LoopPractice {
 		//practice11();
 		//practice12();
 		//practice13();
-		practice14();
+		//practice14();
 		sc.close();
 	}
 
