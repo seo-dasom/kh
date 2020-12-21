@@ -1,134 +1,172 @@
 package com.kh.exam;
 
-public class Sample1 {
-	// Ctrl + F11 -> 실행
-			// F11        -> 디버깅
-			// F6         -> 1단계 실행
-	public static void func1() {
-		for(int i = 1; i <= 5; i++) {
-			System.out.println(i + " 번째 출력");
-		}
+import java.util.Arrays;
 
+public class Sample1 {
+	
+	public static void func1() {
+		int[] arr1;		// Heap에 생성할 배열의 주소를 저장하기 위한 참조주소 공간 생성
+		arr1 = new int[5];	// Heap에 5개의 정수 데이터를 저장할 배열 공간 생성
+							// 생성된 공간의 주소를 arr1에 저장(arr1는 참조주소(값)가 저장)
+		// 배열을 사용하면, 배열에는 기본값이 자동으로 저장된다.
+		System.out.print(arr1[0] + " | " + arr1[1] + " | " + arr1[2]);
 	}
+	
 	public static void func2() {
-		int i;
-		for(i = 1; i <= 5; i++) {
-			System.out.println(i + " 번째 출력");
+		int[] arr1 = {1, 2, 3, 4, 5};
+		System.out.println(arr1[0] + " | " + arr1[1] + " | " + arr1[2]);
+		
+		arr1[0] = 10;
+		arr1[1] = 20;
+		arr1[2] = 30;
+		arr1[3] = 40;
+		arr1[4] = 50;
+		System.out.println(arr1[0] + " | " + arr1[1] + " | " + arr1[2]);
+		
+		for(int i = 0; i < arr1.length; i++) {
+			arr1[i] = (i * 100) + 100;
 		}
-		System.out.println("반복문 밖에서도 i 값 확인 가능 -> " + i);
+		System.out.println(arr1[0] + " | " + arr1[1] + " | " + arr1[2]);
 	}
 	
 	public static void func3() {
-		int i;
-		for(i = 1; i <= 5;) {
-			System.out.println(i + " 번째 출력");
-			//증감식 및 조건식을 잘못 작성하면 무한반복 발생(주의!)
-			i = i + 2; // for() 문에서 증감식 부분을 생략하고 문장안에 작성 가능
+		char[] chArr1 = new char[5];
+		
+		for(int i = 0; i < chArr1.length; i++) {
+			/*
+			 *             65 + i
+			 *  A -> 65 -> 65 + 0
+			 *  B -> 66 -> 65 + 1
+			 *  C -> 67 -> 65 + 2
+			 */
+			chArr1[i] = (char)(65 + i);
 		}
-		System.out.println("반복문 밖에서도 i 값 확인 가능 -> " + i);
+		
+		System.out.println(chArr1[0] + "" + chArr1[1] + "" + chArr1[2]);
 	}
 	
 	public static void func4() {
-		// 반복문에 초기값을 생략하고 외부에 초기값 작성
-		int i = 1;
-		for(; i <= 5;) {
-			System.out.println(i + " 번째 출력");
-			//증감식 및 조건식을 잘못 작성하면 무한반복 발생(주의!)
-			i = i + 2; // for() 문에서 증감식 부분을 생략하고 문장안에 작성 가능
+		String[] strArr1 = {"Java", "JavaScript", "HTML", "CSS", "SQL"};
+		
+		for(int i = 0; i < strArr1.length; i++) {
+			System.out.println("프로그래밍 언어 : " + strArr1[i]);
 		}
-		System.out.println("반복문 밖에서도 i 값 확인 가능 -> " + i);
+//		System.out.println(strArr1[0] + " " + strArr1[1] + " " + strArr1[2]);
 	}
 	
 	public static void func5() {
-		// 반복문에 초기값을 생략하고 외부에 초기값 작성
-		int i = 1;
-		//조건식을 생략, 단 반복문 안에 종료할 수 있는 조건을 만들어야 한다.
-        //무한반복 발생(주의!)
-		for(;;) {
-			System.out.println(i + " 번째 출력");
-			//증감식 및 조건식을 잘못 작성하면 무한반복 발생(주의!)
-			i = i + 2; // for() 문에서 증감식 부분을 생략하고 문장안에 작성 가능
-			if(i > 5) {
-				break;
-			}
-		}
-		System.out.println("반복문 밖에서도 i 값 확인 가능 -> " + i);
+		/*
+		 * 일반적이 변수에 저장된 값을 복사.(값을 복사하여 저장)
+		 * int x = 10;
+		 * int y = x;
+		 * x = 15;		y = 20;
+		 * System.out.print("x -> " + x + "\ty -> "+ y);
+		 * 배열 변수에 저장된 값을 복사. (참조값이 복사하여 저장)
+		 * 참조값만을 복사하기 때문에 원본과 복사본은 동일한 Heap의 메모리를 참조한다.
+		 */
+		int[] arr1 = {1, 2, 3};
+		int[] arr2 = arr1; 	// 얕은복사 -> 참조값만 복사
+		
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
+		
+		arr1[0] = 10;
+		System.out.println("arr1[0] = 10; 을 한 후의 상황");
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
+		
+		arr1[1] = 20;
+		System.out.println("arr1[1] = 20; 을 한 후의 상황");
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
 	}
 	
 	public static void func6() {
 		/*
-		 *  1 ~ 100 까지의 정수값 중 홀수만 출력하는 반복문
+		 * 깊은 복사 : 참조값을 복사하는 것이 아닌 Heap 영역의 값을 복사한다.
 		 */
-		for (int i = 1; i <= 100; i++) {
-			if(i % 2 == 1) {
-				System.out.println(i);	
-			}
-		}
+		int[] arr1 = {1, 2, 3};
+		int[] arr2 = new int[3];
 		
-		for (int i = 1; i <= 100; i = i + 2) {
-			System.out.println(i);	
+		// 반복문을 사용하여 값을 복사
+		for(int i = 0; i < arr1.length; i++) {
+			arr2[i] = arr1[i];
 		}
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
 		
-		int i = 1;
-		for (;;) {
-			System.out.println(i);
-			i = i + 2;
-			if(i > 100) {
-				break;
-			}
-		}
+		arr1[0] = 10;
+		System.out.println("arr1[0] = 10; 을 한 후의 상황");
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
 	}
 	
 	public static void func7() {
 		/*
-		 *  100 ~ 1 까지의 정수값 중 짝수만 출력하는 반복문
+		 * .clone() : 배열을 복사하기 위한 메서드
 		 */
-		for(int i = 100; i >= 1; i--) {
-			if(i % 2 == 0) {
-				System.out.println(i);
-			}
-		}
+		int[] arr1 = {1, 2, 3};
+		int[] arr2 = new int[3];
 		
-		for(int i = 100; i >= 1; i = i - 2) {  // 반복 조건
-			System.out.println(i);
-		}
+		arr2 = arr1.clone();
 		
-		int i = 100;
-		for(;;) {
-			System.out.println(i);
-			i = i - 2;
-			if(i < 1) { // 종료 조건
-				break;
-			}
-		}
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
+		
+		arr1[0] = 10;
+		System.out.println("arr1[0] = 10; 을 한 후의 상황");
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
 	}
 	
 	public static void func8() {
-		/* 중첩 반복문
-		*  1 ~ 9 단 까지 반복 출력 구구단
-		*  1 * 1 = 1  1 * 2 = 2 .... 1 * 9 = 9
-		*  2 * 1 = 2  2 * 2 = 4 ....
-		*  .
-		*  .
-		*  9 * 1 = 9 ...............9 * 9 = 81
-		*/
-		for(int i = 1; i <= 9; i++) {
-			for(int j = 1; j <= 9; j++) {
-				System.out.printf("%d × %d = %d\t", j, i, i * j);
-			}
-			System.out.print("\n");
-		}
+		/*
+		 * System.arraycopy() : 배열을 복사하기 위한 메서드
+		 */
+		int[] arr1 = {1, 2, 3};
+		int[] arr2 = new int[3];
+		
+		//				  (원본,원본시작위치,복사본,복사본시작위치,복사길이);
+		//System.arraycopy(src, srcPos, dest, destPos, length);
+		System.arraycopy(arr1, 0, arr2, 0, arr1.length);
+		
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
+		
+		arr1[0] = 100;
+		System.out.println("arr1[0] = 100; 을 한 후의 상황");
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
 	}
 	
+	public static void func9() {
+		/*
+		 *  import java.util.Arrays;
+		 *  Arrays.copyOf() : 배열을 복사하기 위한 Arrays 객체의 메서드
+		 */
+		int[] arr1 = {1, 2, 3};
+		int[] arr2 = new int[3];
+		
+		arr2 = Arrays.copyOf(arr1, arr1.length);
+		
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
+		
+		arr1[0] = 100;
+		System.out.println("arr1[0] = 100; 을 한 후의 상황");
+		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
+		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
+	}
 	public static void main(String[] args) {
-		//func1();
-		//func2();
-		//func3();
-		//func4();
-		//func5();
-		//func6();
+		func9();
+		//func8();
 		//func7();
-		func8();
+		//func6();
+		//func5();
+		//func4();
+		//func3();
+		//func2();
+		//func1();
 	}
 
 }
