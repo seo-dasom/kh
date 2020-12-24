@@ -634,32 +634,110 @@ public class ArrayPractice {
 	}
 	
 	public static void practice15() {
+		/*
+		 * 	1. 문자열을 입력받아 문자 배열에 저장
+		 * 	2. 문자 배열에는 중복되는 문자 없이 저장
+		 * 	3. 중복 없이 저장된 문자와 문자배열의 크기를 출력
+		 */
+		String input;
+		char[] orgCharArray, copCharArray;
 		
+		System.out.print("문자열 : ");
+		input = sc.next();
+		
+		orgCharArray = new char[input.length()];
+		copCharArray = new char[input.length()];
+		
+		for(int i = 0; i < orgCharArray.length; i++) {
+			orgCharArray[i] = input.charAt(i);
+		}
+		
+		int copIdx = 0;
+		boolean dup = false;
+		for(int i = 0; i < orgCharArray.length; i++) {
+			for(int j = 0; j < copIdx; j++) {
+				if(orgCharArray[i] == copCharArray[j]) {
+					dup = true;
+					break;
+				}
+			}
+			if(!dup) {
+				copCharArray[copIdx] = orgCharArray[i];
+				copIdx++;
+			}
+			dup = false;
+		}
+		
+		System.out.print("문자열에 있는 문자 : ");
+		for(int i = 0; i < orgCharArray.length; i++) {
+			System.out.print(copCharArray[i] + " ");
+		}
+		System.out.print("\n문자 개수 : " + copIdx);
 	}
 	
 	public static void practice16() {
-		String[] programList = new String[3];
-		programList[0] = "자바의 정석";
-		programList[1] = "알고리즘";
-		programList[2] = "C프로그래밍";
-		//	값을 더 입력 2개
-		String[] temp = new String[programList.length + 2];
-		System.arraycopy(programList, 0, temp, 0, programList.length);
-		temp[3] = "인간관계";
-		temp[4] = "자기계발";
-		programList = new String[temp.length];
-		System.arraycopy(temp, 0, programList, 0, temp.length);
+		/*
+		 *	1. 사용자가 입력한 배열의 길이만큼 문자열 배열 선언
+		 *	2. 생성된 문자열 배열의 길이만큼 사용자가 입력하여 값을 초기화
+		 *	3. 사용자에게 추가 입력을 할 것인지 확인 후 추가 입력이 가능하도록
+		 *	4. 추가 입력은 사용자가 입력한 추가 길이 만큼 배열 크기 조정 및 문자열 추가 입력
+		 *	5. 추가 입력을 하지 않으면 배열의 전체 문자열 출력
+		 */
+		String[] proList, tmpList;
+		String yesNo;
+		int arrSize, addSize;
 		
-		for(int i = 0; i < programList.length; i++) {
-			System.out.println(programList[i]);
+		System.out.print("배열의 크기를 입력하세요 : ");
+		arrSize = sc.nextInt();		sc.nextLine();	// 개행문자 처리를 위해 사용
+		
+		proList = new String[arrSize];
+		
+		for(int i = 0; i < arrSize; i++) {
+			System.out.print(i + 1 + " 번째 문자열 : ");
+			proList[i] = sc.nextLine();
+		}
+		
+		while(true) {
+			while(true) {
+				System.out.print("더 값을 입력하겠습니까? (Y/N) : ");
+				yesNo = sc.next();		sc.nextLine();	// 개행문자 처리를 위해 사용
+				if(yesNo.equals("Y") || yesNo.equals("y") || yesNo.equals("N") || yesNo.equals("n")) {
+					break;
+				}
+				System.out.println("대답은 y 또는 n 으로만 하세요.");
+			}
+			if(yesNo.equals("N") || yesNo.equals("n")) {
+				break;
+			}
+			
+			System.out.print("더 입력할 개수 : ");
+			addSize = sc.nextInt();		sc.nextLine();
+			tmpList = new String[proList.length + addSize];
+			
+			for(int i = 0; i < tmpList.length; i++) {
+				if(i < proList.length) {
+					tmpList[i] = proList[i];
+				} else {
+					System.out.print(i + 1 + " 번째 문자열 : ");
+					tmpList[i] = sc.nextLine();
+				}
+			}
+			//	proList = tmpList;
+			
+			proList = new String[tmpList.length];
+			System.arraycopy(tmpList, 0, proList, 0, tmpList.length);
+		}
+		
+		for(int i = 0; i < proList.length; i++) {
+			System.out.print(proList[i] + ", ");
 		}
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//practice16();
-		//practice15();
-		practice14();
+		practice15();
+		//practice14();
 		//practice13();
 		//practice12();
 		//practice10_1();
