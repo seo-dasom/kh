@@ -1,21 +1,22 @@
-package com.kh.class2;
+package com.kh.example.practice6.run;
+
+import com.kh.example.practice6.model.vo.Book;
 
 public class Run {
 
 	public static void main(String[] args) {
-		UserInfo info = new UserInfo();
-		info.setName("홍길동");
-		info.setAge(25);
-		info.setGender('M');
+		Book b1 = new Book();
+		b1.inform();
 		
-		System.out.println("이름 : " + info.getName());
-		System.out.println("나이 : " + info.getAge());
-		System.out.println("성별 : " + info.getGender());
+		System.out.println("===========================");
 		
-		// private 접근제한자로 인해 외부 클랙스에서 접근 불가
-		// info.name = "홍길동";
-		// info.age = 25;
-		// info.gender = 'M';
+		Book b2 = new Book("자바", "KH정보보안", "KH교육원");
+		b2.inform();
+		
+		System.out.println("===========================");
+		
+		Book b3 = new Book("자바", "KH정보보안", "KH교육원", 10000, 0.1);
+		b3.inform();
 	}
 
 }
