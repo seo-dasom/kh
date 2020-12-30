@@ -1,27 +1,47 @@
-package com.kh.example.practice4.model.vo;
+package com.kh.practice.student.model.vo;
 
 public class Student {
-	private int grade;
-	private int classroom;
-	private String name;
-	private double height;
-	private char gender;
+	private String name;		// 이름
+	private String subject;		// 과목
+	private int score;			// 점수
 	
-	{
-		this.grade = 2;
-		this.classroom = 2;
-		this.name = "김고양";
-		this.height = 156.3;
-		this.gender = '여';
+	public Student() {};
+	
+	public Student(String name, String subject, int score) {
+		this.name = name;		this.subject = subject;
+		this.score = score;
 	}
 	
-//	public Student() {}		매개변수 없으면 생략 가능
-	
-	public void information() {
-		System.out.println("학년 : " + this.grade);
-		System.out.println("반 : " + this.classroom);
-		System.out.println("이름 : " + this.name);
-		System.out.println("키 : " + this.height);
-		System.out.println("성별 : " + this.gender);
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public String inform() {
+		// Student 클래스의 모든 필드 값들을 합쳐 반환
+		String result = "";
+		result += "이름 : " + this.name + " / ";
+		result += "과목 : " + this.subject + " / ";
+		result += "점수 : " + this.score;
+		return result;
 	}
 }
