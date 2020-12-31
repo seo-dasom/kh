@@ -1,172 +1,38 @@
-package com.kh.exam;
+package com.kh.exam1;
 
-import java.util.Arrays;
+// ë„í˜• ìŠˆí¼ í´ë˜ìŠ¤
+class Shape {
+	public int width;
+	public int height;
+	
+	public int getArea() {
+		return width * height;
+	}
+}
+
+// ì‚¬ê°í˜• ì„œë¸Œ í´ë˜ìŠ¤
+class Square extends Shape {
+	
+}
+// ì‚¼ê°í˜• ì„œë¸Œ í´ë˜ìŠ¤
+class Triangle extends Shape {
+	@Override
+	public int getArea() {
+		// return width * height / 2;
+		return super.getArea() / 2;
+	}
+}
 
 public class Sample1 {
-	
-	public static void func1() {
-		int[] arr1;		// Heap¿¡ »ı¼ºÇÒ ¹è¿­ÀÇ ÁÖ¼Ò¸¦ ÀúÀåÇÏ±â À§ÇÑ ÂüÁ¶ÁÖ¼Ò °ø°£ »ı¼º
-		arr1 = new int[5];	// Heap¿¡ 5°³ÀÇ Á¤¼ö µ¥ÀÌÅÍ¸¦ ÀúÀåÇÒ ¹è¿­ °ø°£ »ı¼º
-							// »ı¼ºµÈ °ø°£ÀÇ ÁÖ¼Ò¸¦ arr1¿¡ ÀúÀå(arr1´Â ÂüÁ¶ÁÖ¼Ò(°ª)°¡ ÀúÀå)
-		// ¹è¿­À» »ç¿ëÇÏ¸é, ¹è¿­¿¡´Â ±âº»°ªÀÌ ÀÚµ¿À¸·Î ÀúÀåµÈ´Ù.
-		System.out.print(arr1[0] + " | " + arr1[1] + " | " + arr1[2]);
-	}
-	
-	public static void func2() {
-		int[] arr1 = {1, 2, 3, 4, 5};
-		System.out.println(arr1[0] + " | " + arr1[1] + " | " + arr1[2]);
-		
-		arr1[0] = 10;
-		arr1[1] = 20;
-		arr1[2] = 30;
-		arr1[3] = 40;
-		arr1[4] = 50;
-		System.out.println(arr1[0] + " | " + arr1[1] + " | " + arr1[2]);
-		
-		for(int i = 0; i < arr1.length; i++) {
-			arr1[i] = (i * 100) + 100;
-		}
-		System.out.println(arr1[0] + " | " + arr1[1] + " | " + arr1[2]);
-	}
-	
-	public static void func3() {
-		char[] chArr1 = new char[5];
-		
-		for(int i = 0; i < chArr1.length; i++) {
-			/*
-			 *             65 + i
-			 *  A -> 65 -> 65 + 0
-			 *  B -> 66 -> 65 + 1
-			 *  C -> 67 -> 65 + 2
-			 */
-			chArr1[i] = (char)(65 + i);
-		}
-		
-		System.out.println(chArr1[0] + "" + chArr1[1] + "" + chArr1[2]);
-	}
-	
-	public static void func4() {
-		String[] strArr1 = {"Java", "JavaScript", "HTML", "CSS", "SQL"};
-		
-		for(int i = 0; i < strArr1.length; i++) {
-			System.out.println("ÇÁ·Î±×·¡¹Ö ¾ğ¾î : " + strArr1[i]);
-		}
-//		System.out.println(strArr1[0] + " " + strArr1[1] + " " + strArr1[2]);
-	}
-	
-	public static void func5() {
-		/*
-		 * ÀÏ¹İÀûÀÌ º¯¼ö¿¡ ÀúÀåµÈ °ªÀ» º¹»ç.(°ªÀ» º¹»çÇÏ¿© ÀúÀå)
-		 * int x = 10;
-		 * int y = x;
-		 * x = 15;		y = 20;
-		 * System.out.print("x -> " + x + "\ty -> "+ y);
-		 * ¹è¿­ º¯¼ö¿¡ ÀúÀåµÈ °ªÀ» º¹»ç. (ÂüÁ¶°ªÀÌ º¹»çÇÏ¿© ÀúÀå)
-		 * ÂüÁ¶°ª¸¸À» º¹»çÇÏ±â ¶§¹®¿¡ ¿øº»°ú º¹»çº»Àº µ¿ÀÏÇÑ HeapÀÇ ¸Ş¸ğ¸®¸¦ ÂüÁ¶ÇÑ´Ù.
-		 */
-		int[] arr1 = {1, 2, 3};
-		int[] arr2 = arr1; 	// ¾èÀºº¹»ç -> ÂüÁ¶°ª¸¸ º¹»ç
-		
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-		
-		arr1[0] = 10;
-		System.out.println("arr1[0] = 10; À» ÇÑ ÈÄÀÇ »óÈ²");
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-		
-		arr1[1] = 20;
-		System.out.println("arr1[1] = 20; À» ÇÑ ÈÄÀÇ »óÈ²");
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-	}
-	
-	public static void func6() {
-		/*
-		 * ±íÀº º¹»ç : ÂüÁ¶°ªÀ» º¹»çÇÏ´Â °ÍÀÌ ¾Æ´Ñ Heap ¿µ¿ªÀÇ °ªÀ» º¹»çÇÑ´Ù.
-		 */
-		int[] arr1 = {1, 2, 3};
-		int[] arr2 = new int[3];
-		
-		// ¹İº¹¹®À» »ç¿ëÇÏ¿© °ªÀ» º¹»ç
-		for(int i = 0; i < arr1.length; i++) {
-			arr2[i] = arr1[i];
-		}
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-		
-		arr1[0] = 10;
-		System.out.println("arr1[0] = 10; À» ÇÑ ÈÄÀÇ »óÈ²");
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-	}
-	
-	public static void func7() {
-		/*
-		 * .clone() : ¹è¿­À» º¹»çÇÏ±â À§ÇÑ ¸Ş¼­µå
-		 */
-		int[] arr1 = {1, 2, 3};
-		int[] arr2 = new int[3];
-		
-		arr2 = arr1.clone();
-		
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-		
-		arr1[0] = 10;
-		System.out.println("arr1[0] = 10; À» ÇÑ ÈÄÀÇ »óÈ²");
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-	}
-	
-	public static void func8() {
-		/*
-		 * System.arraycopy() : ¹è¿­À» º¹»çÇÏ±â À§ÇÑ ¸Ş¼­µå
-		 */
-		int[] arr1 = {1, 2, 3};
-		int[] arr2 = new int[3];
-		
-		//				  (¿øº»,¿øº»½ÃÀÛÀ§Ä¡,º¹»çº»,º¹»çº»½ÃÀÛÀ§Ä¡,º¹»ç±æÀÌ);
-		//System.arraycopy(src, srcPos, dest, destPos, length);
-		System.arraycopy(arr1, 0, arr2, 0, arr1.length);
-		
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-		
-		arr1[0] = 100;
-		System.out.println("arr1[0] = 100; À» ÇÑ ÈÄÀÇ »óÈ²");
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-	}
-	
-	public static void func9() {
-		/*
-		 *  import java.util.Arrays;
-		 *  Arrays.copyOf() : ¹è¿­À» º¹»çÇÏ±â À§ÇÑ Arrays °´Ã¼ÀÇ ¸Ş¼­µå
-		 */
-		int[] arr1 = {1, 2, 3};
-		int[] arr2 = new int[3];
-		
-		arr2 = Arrays.copyOf(arr1, arr1.length);
-		
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-		
-		arr1[0] = 100;
-		System.out.println("arr1[0] = 100; À» ÇÑ ÈÄÀÇ »óÈ²");
-		System.out.println("arr1 -> " + arr1[0] + ", " + arr1[1] + ", " + arr1[2]);
-		System.out.println("arr2 -> " + arr2[0] + ", " + arr2[1] + ", " + arr2[2]);
-	}
+
 	public static void main(String[] args) {
-		func9();
-		//func8();
-		//func7();
-		//func6();
-		//func5();
-		//func4();
-		//func3();
-		//func2();
-		//func1();
+		Square s = new Square();
+		s.width = 10;		s.height = 20;
+		System.out.println(s.getArea());
+		
+		Triangle t = new Triangle();
+		t.width = 20;		t.height = 50;
+		System.out.println(t.getArea());
 	}
 
 }

@@ -234,26 +234,126 @@ public class DimensionPractice {
 		 * 
 		 * 추가 미션 -> 3차 배열을 이용한 코드로도 작성하시오.
 		 */
+		String[] students =  new String[] {
+				"강건강", "남나나", "도대담", "류라라", "문미미", "박보배",
+				"송성실", "윤예의", "진재주", "차천축", "피풍표", "홍하하"
+		};
 		
+		String[][] part1 = new String[3][2];
+		String[][] part2 = new String[3][2];
+		
+		/*
+		for(int i = 0; i < students.length / 2; i++) {
+			part1[i/2][i%2] = students[i];
+			part2[i/2][i%2] = students[students.length / 2 + i];
+		}
+		*/
+		for(int i = 0; i < part1.length; i++) {
+			for(int j = 0; j < part1[i].length; j++) {
+				part1[i][j] = students[i*2+j];
+				part2[i][j] = students[i*2+j+6];
+			}
+		}
+		
+		System.out.println("=== 1 분단 ===");
+		for(int i = 0; i < part1.length; i++) {
+			for(int j = 0; j < part1[i].length; j++) {
+				System.out.print(part1[i][j] + " ");
+			}
+			System.out.print("\n");
+		}
+		System.out.println("=== 2 분단 ===");
+		for(int i = 0; i < part2.length; i++) {
+			for(int j = 0; j < part2[i].length; j++) {
+				System.out.print(part2[i][j] + " ");
+			}
+			System.out.print("\n");
+		}
 	}
 	
 	public static void practice9() {
-		
+		/*
+		 * 위에 문제에서 자리 배치한 것을 가지고 학생 이름을 검색
+		 * 해당 학생이 어느 자리에 앉았는지 출력.
+		 */
 	}
 	
 	public static void practice10() {
+		/*
+		 * String 2차원 배열 6행 6열을 만들기
+		 * 행의 맨 위와 열의 맨 앞은 각 인덱스를 저장
+		 * 사용자에게 행과 열을 입력 받기
+		 * 해당 좌표의 값을 'X'로 변환해 2차원 배열 출력.
+		 */
+		String[][] strArray = new String[6][6];
+		int line, row;
 		
+		for(int i = 0; i < strArray.length; i++) {
+			for(int j = 0; j < strArray.length; j++) {
+				if(i == 0 & j == 0) {
+					strArray[i][j] = "";
+				} else if(i == 0) {
+					strArray[i][j] = j - 1 + "";
+				} else if(j == 0) {
+					strArray[i][j] = i - 1 + "";
+				} else {
+					strArray[i][j] = "";
+				}
+			}
+		}
+		
+		System.out.print("행 인덱스 입력 : ");
+		line = sc.nextInt();
+		System.out.print("열 인덱스 입력 : ");
+		row = sc.nextInt();
+		
+		strArray[line + 1][row + 1] = "X";
+		
+		for(int i = 0; i < strArray.length; i++) {
+			for(int j = 0; j < strArray[i].length; j++) {
+				System.out.printf("%2s", strArray[i][j]);
+			}
+			System.out.print("\n");
+		}
 	}
 	
 	public static void practice11() {
+		int rowIndex, colIndex;
+		String[][] map = new String[][] {
+			{ " ", "0", "1", "2", "3", "4" },
+			{ "0", " ", " ", " ", " ", " " },
+			{ "1", " ", " ", " ", " ", " " },
+			{ "2", " ", " ", " ", " ", " " },
+			{ "3", " ", " ", " ", " ", " " },
+			{ "4", " ", " ", " ", " ", " " }
+		};
 		
+		while(true) {
+			System.out.print("행 인덱스 입력 : ");		rowIndex = sc.nextInt();
+			
+			if(rowIndex == 99) {
+				System.out.println("프로그램 종료");
+				System.exit(0);
+			}
+			
+			System.out.print("열 인덱스 입력 : "); 		colIndex = sc.nextInt();
+			
+			map[rowIndex+1][colIndex+1] = "X";
+			
+			for(int i = 0; i < map.length; i++) {
+				for(int j = 0; j < map[i].length; j++) {
+						System.out.print(map[i][j] + " ");
+				}
+				System.out.print("\n");
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
-		//practice11();
+		practice11();
 		//practice10();
 		//practice9();
-		practice8();
+		//practice8();
 		//practice7();
 		//practice6();
 		//practice5();
