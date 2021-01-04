@@ -1,13 +1,12 @@
-package com.kh.practice.snack.run;
+package com.kh.practice.point.run;
 
-import com.kh.practice.snack.view.SnackMenu;
+import com.kh.practice.point.view.PointMenu;
 
 public class Run {
 
 	public static void main(String[] args) {
-		SnackMenu s1 = new SnackMenu();
-		
-		s1.menu();
+		PointMenu pm = new PointMenu();
+		pm.mainMenu();
 	}
 
 }
