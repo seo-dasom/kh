@@ -1,100 +1,75 @@
-package com.kh.exam1;
+package com.kh.display.model.vo;
 
-import java.util.Scanner;
+/*
+ *  디스플레이 객체
+ *  	- 속성(멤버 변수)
+ *  		- 크기(가로, 세로, 인치), 무게, 해상도, 밝기, 색조, 명암, 디스플레이 종류(LCD, LED, OLED 등...) 등
+ *  	- 기능(메서드)
+ *  		- 전원on/off, 해상도 변경(1920x1080, 1680x1050, 1600x900 등), 밝기 조정, 색조 조정, 명암 조절
+ */
 
-class UserInfo {
-	private String name;
-	private int age;
-	private char gender;
+class Display {
+	private double width;
+	private double height;
+	private int inch;
+	private double weight;
+	public String 해상도;
+	public int 밝기;
+	public int 색조;
+	public int 명암;
+	private String displayType;
 	
-	public UserInfo(String name, int age) {
-		this.name = name;
-		this.age = age;
-	};
-	
-	public UserInfo(String name, int age, char gender) {
-		this(name, age);
-		this.gender = gender;
+	private Display() {
+		this.inch = 27;
+		this.해상도 = "1929x1080";
 	}
 	
-	public String information() {
-		// information 메서드로 이름, 나이 확인 가능하기 때문에
-		// getName(), getAge() 메서드는 안 만들었다.
-		return this.name + "님의 나이는 " + this.age + "세 입니다.";
-	}
-
-	public char getGender() {
-		return gender;
+	public Display(double width, double height, double weight, String displayType) {
+		this();
+		this.width = width;
+		this.height = height;
+		this.weight = weight;
+		this.displayType = displayType;
 	}
 	
-//	public char[] getGender() {
-//		char[] c = { 'a', 'b', 'c' };
-//		return c;
-//	}
-
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
+	public Display(double width, double height, int inch, double weight, String 해상도, String displayType) {
+		this(width, height, weight, displayType);
+		this.inch = inch;
+		this.해상도 = 해상도;
+		
 	}
 	
-}
-
-class UserController {
-	private UserInfo[] info;
-	private int count = 1;
-	
-	public UserController(int count) {
-		this.count = count;
-		info = new UserInfo[this.count];
+	public String getDisplayType() {
+		return this.displayType;
 	}
 	
-	public void add(String name, int age, int index) {
-		this.info[index] = new UserInfo(name, age);
-	}
-	
-	public UserInfo[] information() {
-		return info;
+	public void setDisplayType(String type) {
+		System.out.println("택배로 제품을 보내주시면 변경해 드리겠습니다.");
+		if(type.equals("LCD")) {
+			System.out.println("3일 소요 됩니다.");
+		} else if(type.equals("LED")) {
+			System.out.println("5일 소요 됩니다.");
+		} else if(type.equals("OLED")) {
+			System.out.println("7일 소요 됩니다.");
+			this.displayType = type;
+		} else {
+			System.out.println("해당 디스플레이로는 변경할 수 없습니다.");
+		}	
 	}
 }
 
 public class Sample {
-	
-	private static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		UserController uc = new UserController(3);
-		uc.add("홍길동", 30, 0);
-		uc.add("김철수", 35, 1);
-		uc.add("박보람", 33, 2);
-		
-		UserInfo[] u = uc.information();
-		for(int i = 0; i < u.length; i++) {
-			System.out.println(u[i].information());
-		}
-/*		String name;
-		int age;
-		
-		UserInfo[] info = new UserInfo[3];
-		
-		for(int i = 0; i < info.length; i++) {
-			System.out.print("이름 : "); 		name = sc.next();
-			System.out.print("나이 : "); 		age = sc.nextInt();
-			info[i] = new UserInfo(name,age);
-		}
-		info[0] = new UserInfo("홍길동", 30);
-		info[1] = new UserInfo("김철수", 35);
-		info[2] = new UserInfo("박보람", 33);
-		
-		for(int i = 0; i < info.length; i++) {
-			System.out.println(info[i].information());
-		}
-*/	}
+		Display dp = new Display(32.5, 24.0, 32, 3.7, "4k", "OLED");
+		System.out.println("displayType : " + dp.getDisplayType());
+		dp.setDisplayType("TFT");
+		System.out.println("displayType : " + dp.getDisplayType());
+//		System.out.println("해상도 : " + dp.해상도);		System.out.println("width : " + dp.width);
+//		System.out.println("inch : " + dp.inch);		System.out.println("height : " + dp.height);
+//		System.out.println("weight : " + dp.weight);	System.out.println("displayType : " + dp.displayType);
+		System.out.println("밝기 : " + dp.밝기);			System.out.println("명암 : " + dp.명암);
+		System.out.println("색조 : " + dp.색조);
+	}
 
 }
