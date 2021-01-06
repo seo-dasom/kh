@@ -25,7 +25,7 @@ public class Question1 {
 			
 			}
 			System.out.println("컴퓨터는 " + computer + "를 냈습니다.");
-			if(computer.equals(input)) {
+			if(computer.equals(input)) {		// 문자열과 문자열 비교는 .equals
 				System.out.println("비겼습니다. 다시 시작합니다.");
 			} else {
 				boolean win = false;

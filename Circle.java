@@ -1,21 +1,13 @@
 package com.kh.test.shape.model.vo;
 
 public class Circle {
-	public double PI = Math.PI;
+	public static final double PI = Math.PI;		// public static final로 사용하는 것이 좋음(상수이기 때문에)
 	private int radius;
 	
 	public Circle() {}
 	
 	public Circle(int radius) {
 		this.radius = radius;
-	}
-
-	public double getPI() {
-		return PI;
-	}
-
-	public void setPI(double pI) {
-		PI = pI;
 	}
 
 	public int getRadius() {
