@@ -1,150 +1,43 @@
-package com.kh.exam2;
+package com.kh.exam1;
 
-/*
- * 동물 슈퍼 클래스 생성
- * 
- * 개, 고양이, 호랑이, 소, 쥐, 말 등등 서브 클래스 생성
- * 
- * 멤버 필드
- * 	나이, 신장, 몸무게
- * 
- * 멤버 메서드
- * 	달리기, 걷기, 먹기, 울음소리
- */
-
-class Animal {
-	private int age;
-	private double tall;
-	private double weight;
-	
-	public Animal(int age, double tall, double weight) {
-		this.age = age;
-		this.tall = tall;
-		this.weight = weight;
-	}
-	
-	public void run() {
-		System.out.println("동물이 달립니다");
-	}
-	public void walk() {
-		System.out.println("동물이 걷습니다.");
-	}
-	public void eat() {
-		System.out.println("동물이 음식을 먹습니다.");
-	}
-	public void howling() {
-		System.out.println("동물이 울음소리를 내고 있습니다.");
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public double getTall() {
-		return tall;
-	}
-
-	public void setTall(double tall) {
-		this.tall = tall;
-	}
-
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-	
-}
-
-class Dog extends Animal {
-	private String name = "개";
-	
-	public Dog(int age, double tall, double weight) {
-		super(age, tall, weight);
-	}
-	
-	@Override
-	public void run() {
-		super.run();
-		System.out.println(this.name + "가 신나게 달립니다.");
-	}
-	
-	@Override
-	public void walk() {
-		super.walk();
-		System.out.println(this.name + "가 주인과 같이 걷고 있습니다.");
-	}
-	
-	public void sitDown() {
-		System.out.println(this.name + "가 앉았습니다.");
-	}
-	
-	@Override
-	public String toString() {
-		// Object 클래스의 메서드를 재정의 해서
-		// 출력을 할 때 원하는 문자열로 출력할 수 있게 만들 수 있다.
-		return this.name + " 나이 : " + this.getAge() + " | 신장 : " + this.getTall();
-	}
-}
-
-class Cat extends Animal {
-	private String name = "고양이";
-	
-	public Cat(int age, double tall, double weight) {
-		super(age, tall, weight);
-	}
-	
-	@Override
-	public void run() {
-		super.run();
-		System.out.println(this.name + "가 재빠르게 달려가고 있습니다.");
-	}
-	
-	@Override
-	public void walk() {
-		super.walk();
-		System.out.println(this.name + "가 사뿐사뿐 걷고 있습니다.");
-	}
-	
-	public void box() {
-		System.out.println(this.name + "가 박스에 들어 갔습니다.");
-	}
-	
-	@Override
-	public String toString() {
-		// Object 클래스의 메서드를 재정의 해서
-		// 출력을 할 때 원하는 문자열로 출력할 수 있게 만들 수 있다.
-		return this.name + " 나이 : " + this.getAge() + " | 신장 : " + this.getTall();
-	}
-}
+import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
+import java.util.Formatter;
 
 public class Sample1 {
 
 	public static void main(String[] args) {
-		/* Dog[] dogArray = new Dog[3];
-		dogArray[0] = new Dog(1, 120.0, 3.0);
-		dogArray[1] = new Dog(1, 120.0, 3.0);
-		dogArray[2] = new Dog(1, 120.0, 3.0);
-		*/
-		Animal[] aniArray = new Animal[3];
-		aniArray[0] = new Dog(1, 120.0, 3.0);
-		aniArray[1] = new Cat(1, 120.0, 3.0);
-		aniArray[2] = new Dog(1, 120.0, 3.0);
+		// Date 클래스
+		Date today = new Date();
+		System.out.println("today() -> " + today);
+		System.out.println("today.getTime() -> " + today.getTime());
+		System.out.printf("%tY년\n", today);		System.out.printf("%tm월\n", today);
+		System.out.printf("%td일\n", today);
+		System.out.printf("%tH시\n", today);		System.out.printf("%tM분\n", today);
+		System.out.printf("%tS초\n", today);
+		System.out.printf("%1$tY-%1$tm-%1$td\n", today);
 		
-		Dog dog = new Dog(1, 100.0, 2.5);
-		Cat cat = new Cat(2, 65.5, 1.5);
+		GregorianCalendar gc = new GregorianCalendar();
+		System.out.println("년 -> " + gc.get(Calendar.YEAR));
+		System.out.println("월 -> " + (gc.get(Calendar.MONTH) + 1));
+		System.out.println("일 -> " + gc.get(Calendar.DATE));
+		System.out.println("시 -> " + gc.get(Calendar.HOUR));
+		System.out.println("분 -> " + gc.get(Calendar.MINUTE));
+		System.out.println("초 -> " + gc.get(Calendar.SECOND));
 		
-		dog.run();		dog.sitDown();
-		cat.run();		cat.box();
+		SimpleDateFormat df = new SimpleDateFormat("yyy-MM-dd");
+		System.out.println(df.format(new Date()));
 		
-		System.out.println(dog);
-		System.out.println(cat);
+		df = new SimpleDateFormat("HH:mm:ss");
+		System.out.println(df.format(new Date()));
+		
+		// Formatter
+		Formatter f = new Formatter();
+		String s = f.format("%1$tY-%1$tm-%1$td", today).toString();
+		System.out.println(s);
+		
 	}
 
 }

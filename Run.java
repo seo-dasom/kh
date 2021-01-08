@@ -1,12 +1,12 @@
-package com.kh.practice.point.run;
+package com.kh.practice.token.run;
 
-import com.kh.practice.point.view.PointMenu;
+import com.kh.practice.token.view.*;
 
 public class Run {
 
 	public static void main(String[] args) {
-		PointMenu pm = new PointMenu();
-		pm.mainMenu();
+		TokenMenu tm = new TokenMenu();
+		tm.mainMenu();
 	}
 
 }
