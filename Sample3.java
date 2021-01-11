@@ -1,30 +1,64 @@
-package com.kh.exam01;
+package com.kh.exam3;
 
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Sample3 {
-	
+
 	public static void main(String[] args) {
-		/*
-		 * µÎ °³ÀÇ Á¤¼ö °ªÀ» ÀÔ·Â ¹ŞÀº ÈÄ num1ÀÌ num2ÀÇ
-		 * ¹è¼öÀÎÁö È®ÀÎÇÏ´Â ÄÚµå
+		/**
+		 *  FileReader / FileWriter
+		 *  	- íŒŒì¼ë¡œ ë¶€í„° ë¬¸ì ë‹¨ìœ„ì˜ ë°ì´í„° ì½ê¸°/ì“°ê¸°
+		 *  	- ì£¼ë¡œ í…ìŠ¤íŠ¸ íŒŒì¼ì— ëŒ€í•œ ì²˜ë¦¬ë¥¼ ë‹´ë‹¹
 		 */
-		int num1, num2;
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.print("Á¤¼ö 1 : ");
-		num1 = sc.nextInt();
-		
-		System.out.print("Á¤¼ö 2 : ");
-		num2 = sc.nextInt();
-		
-		if(num1 % num2 == 0) {
-			System.out.printf("%d´Â %dÀÇ ¹è¼ö ÀÔ´Ï´Ù.", num1, num2);
-		} else {
-			System.out.printf("%d´Â %dÀÇ ¹è¼ö ¾Æ´Õ´Ï´Ù.", num1, num2);
+		// íŒŒì¼ ì½ê¸°
+		try {
+			File f = new File("C:/Sample.txt");
+			FileReader fr = new FileReader(f);
+			int read;
+			char[] cArr = new char[4];
+			// ë¬¸ì ë°°ì—´ë¡œ ì½ì€ ë°ì´í„°ë¥¼ í•˜ë‚˜ì˜ ë¬¸ìì—´ë¡œ ë§Œë“¤ì–´ ì¶œë ¥
+			String s = "";
+			StringBuffer sb = new StringBuffer();
+			while((read = fr.read(cArr)) != 1) {
+				// System.out.print(cArr);
+				// ë°˜ë³µë¬¸ì—ì„œ ì¶œë ¥í•˜ì§€ ì•Šê³  ë°˜ë³µì´ ëë‚œ ì´í›„ì— ì¶œë ¥
+				s += new String(cArr, 0, read);
+				sb.append(cArr, 0, read);
+				/*if(cArr.length == read) {
+					s += new String(cArr);
+					sb.append(cArr);
+				} else {
+					for(int i = 0; i < read; i++) {
+						s += cArr[i];
+						sb.append(cArr[i]);
+					}
+				}*/
+			}
+			System.out.println(s);
+			System.out.println(sb.toString());
+			fr.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("fileNotFoundException ì—ëŸ¬ ë°œìƒ");
+		} catch (IOException e) {
+			System.out.println("IOException ì—ëŸ¬ ë°œìƒ");
 		}
 		
-		sc.close();
+		
+		// íŒŒì¼ ì“°ê¸°
+		try {
+			File f = new File("C:/Sample.txt");
+			FileWriter fw = new FileWriter(f);
+			fw.write("íŒŒì¼ì— ë¬¸ìì—´ ì“°ê¸°");
+			fw.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("fileNotFoundException ì—ëŸ¬ ë°œìƒ");
+		} catch (IOException e) {
+			System.out.println("IOException ì—ëŸ¬ ë°œìƒ");
+		}
 	}
 
 }

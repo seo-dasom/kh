@@ -1,43 +1,44 @@
 package com.kh.exam1;
 
+import java.io.File;
+import java.io.IOException;
+
 public class Sample1 {
 
 	public static void main(String[] args) {
-		/* 
-		 *  Wrapper 클래스
-		 *		- 기본 데이터 타입을 객체화 해주는 클래스
-		 *		- 객체로 감싸서(Wrapper) 사용할 수 있도록 한다.
-		 */
-		String str;
+		File f = new File("C:/Sample.txt");
+		try {
+			f.createNewFile();
+		} catch (IOException e) {
+			System.out.println("IOException 에러 발생");
+		}
+		System.out.println(f.getName() + " 읽기 가능? : " + f.canRead());
+		System.out.println(f.getName() + " 쓰기 가능? : " + f.canWrite());
+		System.out.println(f.getName() + " 실행 가능? : " + f.canExecute());
+		System.out.println(f.getName() + " 디렉터리? : " + f.isDirectory());
+		System.out.println(f.getName() + " 파일? : " + f.isFile());
+		System.out.println(f.getName() + " 숨김? : " + f.isHidden());
+		System.out.println(f.getName() + " 크기(바이트)? : " + f.length());
+		System.out.println(f.getName() + " 마지막 수정날짜 : " + f.lastModified());
 		
-		// 문자열 -> 기본 자료형으로 변환
-		str = "65";
-		byte b = Byte.parseByte(str);
-		short s = Short.parseShort(str);
-		int i = Integer.parseInt(str);
-		long l = Long.parseLong(str);
-		float f = Float.parseFloat(str);
-		double d = Double.parseDouble(str);
-		boolean bool = Boolean.parseBoolean(str);
-		char c = str.charAt(0);
+		f = new File("C:/");
+		String[] fileList = f.list();
+		for(int i = 0; i < fileList.length; i++) {
+			System.out.println(fileList[i]);
+		}
+		System.out.println("=========listFiles()=========");
+		File[] fList = f.listFiles();
+		for(int i = 0; i < fList.length; i++) {
+			System.out.println(fList[i] + "\t" + fList[i].isHidden() + "\t" + fList[i].length());
+		}
 		
-		// 기본 자료형 -> 문자열로 변환
-		str = Byte.valueOf(b).toString();		// Byte		자료형을 Byte		객체화 후 문자열로 변환
-		str = Short.valueOf(s).toString();		// short 	자료형을 Short		객체화 후 문자열로 변환
-		str = Integer.valueOf(i).toString();	// int 		자료형을 Integer 	객체화 후 문자열로 변환
-		str = Long.valueOf(l).toString();		// long 	자료형을 Long 		객체화 후 문자열로 변환
-		str = Float.valueOf(f).toString();		// float 	자료형을 Float 	객체화 후 문자열로 변환
-		str = Double.valueOf(d).toString();		// double 	자료형을 Double 	객체화 후 문자열로 변환
-		str = Boolean.valueOf(bool).toString();	// boolean 	자료형을 Boolean 	객체화 후 문자열로 변환
-		str = Character.valueOf(c).toString();	// char 	자료형을 Character	객체화 후 문자열로 변환
+		f = new File("C:/newFolder");
+		f.mkdir();
 		
-		// 기본 데이터를 객체화 하는 방법
-		Integer num1 = new Integer(10);		// Boxing
-		Integer num2 = 20;					// Auto-Boxing
+		f = new File("C:/newFolder/sam");
+		f.mkdir();
 		
-		// 객체화된 데이터를 기본 데이터로 만드는 방법
-		int num3 = num1.intValue();			// Unboxing
-		int num4 = num2;					// Auto-Unboxing
+		new File("C:/newFolder/sam").delete();
 	}
 
 }
