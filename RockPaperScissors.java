@@ -1,95 +1,149 @@
-package com.kh.practice.comp;
+package com.kh.practice.game;
 
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
+import java.util.Scanner;
 
 public class RockPaperScissors {
+	
 	public static Scanner sc = new Scanner(System.in);
-	public static void rps() {
-		/*
-		 * »ç¿ëÀÚ ÀÌ¸§ ÀÔ·Â
-		 * ÄÄÇ»ÅÍ¿Í °¡À§¹ÙÀ§º¸
-		 * ÄÄÇ»ÅÍ (°¡À§,¹ÙÀ§,º¸)´Â ·£´ıÀ¸·Î °áÁ¤
-		 * »ç¿ëÀÚ¿¡°Ô´Â Á÷Á¢ °¡À§¹ÙÀ§º¸ Ãâ·Â
-		 * »ç¿ëÀÚ°¡ "exit"¸¦ ÀÔ·ÂÇÏ±â Àü±îÁö °è¼Ó ÁøÇà
-		 * "exit" ÀÔ·Â ½Ã ¹İº¹ ¸ØÃß°í
-		 * ¸î¹øÀÇ ½ÂºÎ¿¡¼­ ¸î¹ø ÀÌ±â°í,¸î¹ø ºñ±â°í,¸î¹ø Á³´ÂÁö Ãâ·Â.
-		 */
-		Random rand = new Random();
+	public int w = 0, l = 0, d = 0;
+	
+	public void printMainMenu() {
+		String menu = "";
+		menu += "â”Œ--------------------------â”\n";
+		menu += "|â”Œ------------------------â”|\n";
+		menu += "||		ê°€ìœ„ ë°”ìœ„ ë³´ ê²Œì„	   ||\n";
+		menu += "|â””------------------------â”˜|\n";
+		menu += "â”œ--------------------------â”¤\n";
+		menu += "| 1. ìƒˆ ê²Œì„					|\n";
+		menu += "| 2. ê²Œì„ ë¶ˆëŸ¬ì˜¤ê¸°				|\n";
+		menu += "| 3. ê¸°ë¡ í™•ì¸í•˜ê¸°				|\n";
+		menu += "| 4. ê²Œì„ ì¢…ë£Œ				|\n";
+		menu += "â””--------------------------â”˜\n";
+		menu += " : ";
+		System.out.print(menu);
+	}
+	
+	public void printCRPMenu() {
+		String strCPR = "";
+		strCPR += "â”Œ-----------------------------â”\n";
+		strCPR += "| 1. ê°€ìœ„                     	 |\n";
+		strCPR += "| 2. ë°”ìœ„                     	 |\n";
+		strCPR += "| 3. ë³´						 |\n";
+		strCPR += "| 4. ê·¸ë§Œ!               	     |\n";
+		strCPR += "â””-----------------------------â”˜\n";
+		strCPR += " : ";
+		System.out.print(strCPR);
+	}
+	
+	public void playGame(int player) {
+		int computer = new Random().nextInt(3) + 1;
 		
-		String user, com, input = "";
-		int win = 0, lose = 0, draw = 0;
-		int random = 0;
-		
-		System.out.print("´ç½ÅÀÇ ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä : ");
-		user = sc.next();
-		
-		while(true) {
-			random = rand.nextInt(3);
-			if(random == 0) {
-				com = "°¡À§";
-			} else if(random == 1) {
-				com = "¹ÙÀ§";
+		if(player != 4) {
+			if(computer == player) {
+				System.out.println("ë¹„ê²¼ìŠµë‹ˆë‹¤.");
+				d++;
 			} else {
-				com = "º¸";
-			}
-			System.out.print("°¡À§¹ÙÀ§º¸ : ");
-			input = sc.next();
-			
-			if(input.equals("exit")) {
-				System.out.println((win+draw+lose)+"Àü "+win+"½Â "+draw+"¹« "+lose+"ÆĞ");
-				break;
-			}
-			
-			System.out.printf("ÄÄÇ»ÅÍ : %s\n", com);
-			System.out.println(user + " : " + input);
-			
-			switch(input) {
-				case "°¡À§" :
-					if(com.equals("°¡À§")) {
-						System.out.println("ºñ°å½À´Ï´Ù.");
-						draw++;
-					} else if(com.equals("¹ÙÀ§")) {
-						System.out.println("Á³½À´Ï´Ù ¤Ğ¤Ğ");
-						lose++;
-					} else {
-						System.out.println("ÀÌ°å½À´Ï´Ù !");
-						win++;
+				if(computer == 1) {
+					if(player == 2) {
+						System.out.println("ì´ê²¼ìŠµë‹ˆë‹¤.");
+						w++;
+					} else if(player == 3) {
+						System.out.println("ì¡ŒìŠµë‹ˆë‹¤.");
+						l++;
 					}
-					break;
-				case "¹ÙÀ§" :
-					if(com.equals("¹ÙÀ§")) {
-						System.out.println("ºñ°å½À´Ï´Ù.");
-						draw++;
-					} else if(com.equals("°¡À§")) {
-						System.out.println("Á³½À´Ï´Ù ¤Ğ¤Ğ");
-						lose++;
-					} else {
-						System.out.println("ÀÌ°å½À´Ï´Ù !");
-						win++;
+				} else if(computer == 2) {
+					if(player == 1) {
+						System.out.println("ì¡ŒìŠµë‹ˆë‹¤.");
+						l++;
+					} else if(player == 3) {
+						System.out.println("ì´ê²¼ìŠµë‹ˆë‹¤.");
+						w++;
 					}
-					break;
-				case "º¸" :
-					if(com.equals("º¸")) {
-						System.out.println("ºñ°å½À´Ï´Ù.");
-						draw++;
-					} else if(com.equals("°¡À§")) {
-						System.out.println("Á³½À´Ï´Ù ¤Ğ¤Ğ");
-						lose++;
-					} else {
-						System.out.println("ÀÌ°å½À´Ï´Ù !");
-						win++;
+				} else if(computer == 3) {
+					if(player == 1) {
+						System.out.println("ì´ê²¼ìŠµë‹ˆë‹¤.");
+						w++;
+					} else if(player == 2) {
+						System.out.println("ì¡ŒìŠµë‹ˆë‹¤.");
+						l++;
 					}
-					break;
-					
-					default :
-						System.out.println("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
 				}
 			}
 		}
+	}
+	
+	public void save() {
+		File f = new File("D:/score.txt");
+		try {
+			FileWriter fw = new FileWriter(f);
+			fw.write(String.format("%d,%d,%d", this.w, this.l, this.d));
+			fw.close();
+		} catch (IOException e) {
+			System.out.println("íŒŒì¼ ì…ì¶œë ¥ì— ë¬¸ì œê°€ ë°œìƒ í–ˆìŠµë‹ˆë‹¤.");
+		}
+	}
+	
+	public void load() {
+		File f = new File("D:/score.txt");
+		String[] score = new String[] { "0", "0", "0" };
+		try {
+			FileReader fr = new FileReader(f);
+			String strRead = "";
+			int len;
+			char[] buff = new char[32];
+			while((len = fr.read(buff)) != -1) {
+				strRead += new String(buff, 0, len);
+			}
+			score = strRead.split(",");
+			fr.close();
+		} catch (IOException e) {
+			System.out.println("íŒŒì¼ ì…ì¶œë ¥ì— ë¬¸ì œê°€ ë°œìƒ í–ˆìŠµë‹ˆë‹¤.");
+		}
+		this.w = Integer.parseInt(score[0]);
+		this.l = Integer.parseInt(score[1]);
+		this.d = Integer.parseInt(score[2]);
+	}
 	
 	public static void main(String[] args) {
-		rps();
-		sc.close();
+		/*
+		 *  ./, ../ : ìƒëŒ€ê²½ë¡œ, í˜„ì¬ í”„ë¡œê·¸ë¨ì´ ì‹¤í–‰ë˜ëŠ” ìœ„ì¹˜ì—ì„œ ë¶€í„°ì˜ ìƒëŒ€ì  ê²½ë¡œë¥¼ í‘œê¸°í•  ë•Œ ì‚¬ìš©
+		 *  		  ./ -> í˜„ì¬ ì‹¤í–‰ ìœ„ì¹˜,  ../ -> í˜„ì¬ ì‹¤í–‰ ìœ„ì¹˜ì˜ ìƒìœ„ ìœ„ì¹˜
+		 *  C:/, D:/, /: ì ˆëŒ€ ê²½ë¡œ, ìµœìƒìœ„ ê²½ë¡œë¶€í„° ì‹œì‘í•˜ëŠ” ì „ì²´ ê²½ë¡œë¥¼ í‘œê¸°í•  ë•Œ ì‚¬ìš©
+		 */
+		RockPaperScissors r = new RockPaperScissors();
+		r.printMainMenu();
+		int menuNumber = sc.nextInt();	sc.nextLine();
+		
+		if(menuNumber == 1) {
+			// ìƒˆ ê²Œì„
+			r.printCRPMenu();	// ê°€ìœ„ ë°”ìœ„ ë³´ ì„ íƒ ì¶œë ¥
+			int player = sc.nextInt();	sc.nextLine();
+			r.playGame(player);
+		
+			System.out.printf("í˜„ì¬ ê¹Œì§€ì˜ ì „ì ì€ %dìŠ¹ %díŒ¨ %dë¬´ ì…ë‹ˆë‹¤.\n", r.w, r.l, r.d);
+			r.save();
+		} else if(menuNumber == 2) {
+			// ê²Œì„ ë¶ˆëŸ¬ì˜¤ê¸°
+			r.load();
+			
+			r.printCRPMenu();	// ê°€ìœ„ ë°”ìœ„ ë³´ ì„ íƒ ì¶œë ¥
+			int player = sc.nextInt();	sc.nextLine();
+			r.playGame(player);
+			
+			System.out.printf("í˜„ì¬ ê¹Œì§€ì˜ ì „ì ì€ %dìŠ¹ %díŒ¨ %dë¬´ ì…ë‹ˆë‹¤.\n", r.w, r.l, r.d);
+			r.save();
+		} else if(menuNumber == 3) {
+			// ê¸°ë¡ í™•ì¸í•˜ê¸°
+			r.load();
+			
+			System.out.printf("í˜„ì¬ ê¹Œì§€ ìŠ¤ì½”ì–´ %dìŠ¹ %díŒ¨ %dë¬´ ì…ë‹ˆë‹¤.\n", r.w, r.l, r.d);
+		} else if(menuNumber == 4) {
+			System.exit(0);
+		}
 	}
 }
