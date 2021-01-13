@@ -1,38 +1,93 @@
-package com.kh.exam01;
+package com.kh.exam4;
 
-import java.util.Scanner;
+import java.io.*;
 
 public class Sample4 {
 
 	public static void main(String[] args) {
-		int num;
-		
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.print("Á¤¼ö ÀÔ·Â (1 ~ 5) : ");
-		num = sc.nextInt();
-		
-		switch(num) {
-		case 1:
-			System.out.println("1À» ÀÔ·ÂÇÏ¿´½À´Ï´Ù.");
-			break; //switch ¹®ÀåÀ» Á¾·áÇÏ±â À§ÇØ »ç¿ë(¹İº¹¹®¿¡¼­µµ »ç¿ë)
-		case 2:
-			System.out.println("2À» ÀÔ·ÂÇÏ¿´½À´Ï´Ù.");
-			break;
-		case 3:
-			System.out.println("3À» ÀÔ·ÂÇÏ¿´½À´Ï´Ù.");
-			break;
-		case 4:
-			System.out.println("4À» ÀÔ·ÂÇÏ¿´½À´Ï´Ù.");
-			break;
-		case 5:
-			System.out.println("5À» ÀÔ·ÂÇÏ¿´½À´Ï´Ù.");
-			break;
-		default:
-			System.out.println("1~5¸¦ ÀÔ·ÂÇÏÁö ¾Ê¾Ò½À´Ï´Ù.");
+		// FileInputStream + InputStreamReader
+		// ë°”ì´íŠ¸ ê¸°ë°˜ 	+ ë¬¸ìë³´ì¡°
+		try {
+			File f = new File("C:/Sample.txt");
+			FileInputStream fis = new FileInputStream(f);
+			InputStreamReader isr = new InputStreamReader(fis);
+			
+			String s = "";
+			int read;
+			char[] cArr = new char[16];
+			while((read = isr.read(cArr)) != -1) {
+				if(read == cArr.length) {
+					s += new String(cArr);
+				} else {
+					s += new String(cArr, 0, read);
+				}
+			}
+			System.out.println(s);
+			isr.close();
+			fis.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
-		sc.close();
+		// FileOutputStream + OutputStreamWriter
+		// ë°”ì´íŠ¸ ê¸°ë°˜ 	+ ë¬¸ìë³´ì¡°
+		try {
+			File f = new File("C:/Sample.txt");
+			FileOutputStream fos = new FileOutputStream(f, true);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+					
+			osw.write("ë¬¸ìì—´ì„ ì…ë ¥í•˜ì—¬ íŒŒì¼ ì“°ê¸°\n");
+			osw.close();
+			fos.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// FileReader + BufferedReader
+		// ë¬¸ì ê¸°ë°˜ + ë²„í¼ ë³´ì¡°
+		try {
+			File f = new File("C:/Sample.txt");
+			FileReader fr = new FileReader(f);
+			BufferedReader br = new BufferedReader(fr);
+			
+			StringBuilder sb = new StringBuilder();
+			while(br.ready()) {
+				sb.append(br.readLine() + "\n");
+			}
+			System.out.print(sb.toString());
+			br.close();
+			fr.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		// FileWriter + BufferedWriter
+		// ë¬¸ì ê¸°ë°˜ + ë²„í¼ ë³´ì¡°
+		try {
+			File f = new File("C:/Sample.txt");
+			FileWriter fw = new FileWriter(f);
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			bw.write("ë¬¸ì ê¸°ë°˜ ìŠ¤íŠ¸ë¦¼ + ë²„í¼ ë³´ì¡°(BufferedWriter)");
+			bw.newLine();
+			bw.close();
+			fw.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+				
 	}
 
 }
