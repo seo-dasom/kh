@@ -1,151 +1,91 @@
 package com.kh.exam3;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.*;
 
 public class Sample3 {
-	
-	public static int wordCount(String filename, String word) {
-		/*
-		 *  지정한 파일의 문자열에서 word에 해당하는 단어가 몇 개 있는지
-		 *  반환하는 메서드
-		 */
-		try {
-			File f = new File(filename);
-			FileReader fr = new FileReader(f);
-			int read;
-			char[] cArr = new char[1024];
-			String s = "";
-			while((read = fr.read(cArr)) != -1) {
-				s += new String(cArr, 0, read);
-			}
-			int stIdx = 0;
-			int foundCount = 0;
-			while(true) {
-				stIdx = s.indexOf(word, stIdx);
-				if(stIdx == -1) {
-					break;
-				}
-				foundCount += 1;
-				stIdx = stIdx + 1;
-			}
-			fr.close();
-			return foundCount;
-		} catch (FileNotFoundException e) {
-			System.out.println("해당 파일이 존재하지 않습니다.");
-		} catch (IOException e) {
-			System.out.println("파일 입출력에 문제가 발생 했습니다.");
-		}
-		return 0;
-	}
-	
-	public static void saveDirFileList(String dir) {
-		/*
-		 *  지정한 디렉터리 안의 폴더와 파일의 목록을 파일로 만들어 출력
-		 *  숨김 파일/폴더, 일반 파일/폴더를 구분하여 저장한다.
-		 */
-		File f = new File(dir);
-
-		if(!f.exists()) {
-			System.out.println(dir + " 에 해당하는 디렉터리 또는 파일이 존재하지 않습니다.");
-		}
-		File[] fList = f.listFiles();
-		// nFile : 일반 파일 문자열	| nFolder : 일반 디렉터리	| dFile : 숨김 파일	| dFolder : 숨김 디렉터리
-		String nFile = "", nFolder = "", dFile = "", dFolder = "";
-		for(int i = 0; i < fList.length; i++) {
-			if(fList[i].isFile()) {
-				if(fList[i].isHidden()) {
-					dFile += fList[i].getName() + ", ";
-				} else {
-					nFile += fList[i].getName() + ", ";
-				}
-			} else if(fList[i].isDirectory()) {
-				if(fList[i].isHidden()) {
-					dFolder += fList[i].getName() + ", ";
-				} else {
-					nFolder += fList[i].getName() + ", ";
-				}
-			}
-		}
-		try {
-			FileWriter fw = new FileWriter(dir + "/list.txt");
-			fw.write(dir + "의 파일 목록\n");
-			fw.write("\t숨김 파일\n");
-			fw.write("\t\t" + dFile + "\n");
-			fw.write("\t숨김 폴더\n");
-			fw.write("\t\t" + dFolder + "\n");
-			fw.write("\t폴더\n");
-			fw.write("\t\t" + nFolder + "\n");
-			fw.write("\t파일\n");
-			fw.write("\t\t" + nFile + "\n");
-			fw.close();
-			System.out.println(dir + "/list.txt 위치에 파일 쓰기가 완료되었습니다.");
-		} catch (FileNotFoundException e) {
-			System.out.println("해당 파일 및 디렉터리가 존재하지 않습니다.");
-		} catch (IOException e) {
-			System.out.println("파일 입출력에 오류가 발생했습니다.");
-		}
-	}
 
 	public static void main(String[] args) {
-		/**
-		 *  FileReader / FileWriter
-		 *  	- 파일로 부터 문자 단위의 데이터 읽기/쓰기
-		 *  	- 주로 텍스트 파일에 대한 처리를 담당
+		/*
+		 * 	List 계열
+		 * 		- 순서 유지 및 중복 저장이 가능한 컬랙션
+		 * 		- ArrayList, Vector, LinkedList 가 있다.
+		 * 
+		 * 	ArrayList
+		 * 		- 단방향 포인터 구조로 자료에 대한 순차 접근에 강점을 가진다.
+		 * 
+		 * 	Vector
+		 * 		- 동기화(synchronized)된 메소드로 구성되어 멀티쓰레드 환경에서의
+		 * 		  안정성을 가진다.
+		 * 
+		 * 	LinkedList
+		 * 		- 양방향 포인터 구조로 데이터의 삽입, 삭제가 빈번한 경우 빠른 성능을
+		 * 		  보장하며, 앞/뒤로 검색이 가능하기 때문에 가장 빠른 검색이 가능한
+		 * 		  방향으로 접근하여 수정할 수 있다.
 		 */
-		String filename = "C:/Users/projava/eclipse/jee-2020-09/eclipse/eclipse.ini";
-		System.out.println(wordCount(filename, "eclipse"));
-		saveDirFileList("C:/users/projava");
 		
-		// 파일 읽기
-/*		try {
-			File f = new File("C:/Sample.txt");
-			FileReader fr = new FileReader(f);
-			int read;
-			char[] cArr = new char[4];
-			// 문자 배열로 읽은 데이터를 하나의 문자열로 만들어 출력
-			String s = "";
-			StringBuffer sb = new StringBuffer();
-			while((read = fr.read(cArr)) != -1) {
-				// System.out.print(cArr);
-				// 반복문에서 출력하지 않고 반복이 끝난 이후에 출력
-				s += new String(cArr, 0, read);
-				sb.append(cArr, 0, read);
-//				if(cArr.length == read) {
-//					s += new String(cArr);
-//					sb.append(cArr);
-//				} else {
-//					for(int i = 0; i < read; i++) {
-//						s += cArr[i];
-//						sb.append(cArr[i]);
-//					}
-//				}
-			}
-			System.out.println(s);
-			System.out.println(sb.toString());
-			fr.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("fileNotFoundException 에러 발생");
-		} catch (IOException e) {
-			System.out.println("IOException 에러 발생");
+		// ArrayList<Integer> lst = new ArrayList<>();
+		// Vector<Integer> lst = new Vector<>();
+		LinkedList<Integer> lst = new LinkedList<>();
+		
+		// 데이터 추가
+		lst.add(10);		lst.add(20);		lst.add(30);
+		System.out.println(lst);
+		
+		lst.add(1, 15);				// 1 번 인덱스에 15 요소 추가
+		System.out.println(lst);
+		
+		lst.add(3, 25);				// 3 번 인덱스에 25 요소 추가
+		System.out.println(lst);
+		
+		lst.add(lst.size(), 35);	// 마지막 인덱스에 35 요소 추가
+		System.out.println(lst);
+		
+		// 데이터 수정
+		lst.set(0, 12);		lst.set(2, 22);		lst.set(4, 32);
+		System.out.println(lst);
+		
+		// 데이터 검색
+		System.out.println(lst.get(0) + ", " + lst.get(2) + ", " + lst.get(4));
+		System.out.println("12의 위치값 -> " + lst.indexOf(12));
+		System.out.println("22의 위치값 -> " + lst.indexOf(22));
+		System.out.println("32의 위치값 -> " + lst.indexOf(32));
+		System.out.println("42의 위치값 -> " + lst.indexOf(42));
+		
+		System.out.println("32가 존재하는가 -> " + lst.contains(32));
+		System.out.println("42가 존재하는가 -> " + lst.contains(42));
+		
+		System.out.println("빈 컬렉션인가 -> " + lst.isEmpty());
+		
+		// 데이터 삭제
+		//lst.remove(0);		lst.remove(1);		lst.remove(2);
+		//System.out.println(lst);
+		
+		//lst.remove(new Integer(15));
+		//System.out.println(lst);
+		
+		System.out.println(lst.subList(1, 4));
+		
+		// 리스트의 마지막 요소는 빼고 반복(foreach 반복)
+		for(int x: lst.subList(0, lst.size()-1)) {
+			System.out.print(x + " ");
 		}
 		
+		System.out.println();
 		
-		// 파일 쓰기
-		try {
-			File f = new File("C:/Sample.txt");
-			FileWriter fw = new FileWriter(f);
-			fw.write("파일에 문자열 쓰기");
-			fw.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("fileNotFoundException 에러 발생");
-		} catch (IOException e) {
-			System.out.println("IOException 에러 발생");
+		// 리스트의 첫 요소는 빼고 반복(foreach 반복)
+		for(int x: lst.subList(1, lst.size())) {
+			System.out.print(x + " ");
 		}
-		*/
+		
+		System.out.println();
+		
+		// 정렬
+		Collections.sort(lst);		// 오름차순
+		System.out.println(lst);
+		
+		Collections.reverse(lst);	// 내림차순
+		System.out.println(lst);
+		
 	}
 
 }

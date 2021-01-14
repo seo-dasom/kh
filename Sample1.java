@@ -1,129 +1,37 @@
 package com.kh.exam1;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
+/**
+ *  제네릭(Generic)
+ *  	- 타입 안정성 향상 : 의도하지 않은 타입의 객체가 사용되는 것을
+ *  	  컴파일 단계에서 확인 할 수 있게 한다.
+ *  	- 메서드 오버라이드를 할 필요 없이 다양한 자료형을 받아서 반환하는 메서드 생성 가능
+ *		- 컬렉션, 스트림, NIO 등에서 많이 사용.
+ *		- 사용자 측 : <> 다이아몬드 연산자를 사용하여 타입을 지정
+ *		  제공자 측 : <> 다이아몬드 연산자를 사용하여 사용자 측이 사용해야 할 타입을 매개변수화 한다.
+ *		- 제공자 측이 사용하는 매개변수명으로는 다음과 같은 약자를 많이 사용한다.
+ *			  <E>			: Element 약자 -> 컬랙션에 저장할 데이터 타입
+ *			  <T>			: Type 약자	 -> 데이터 타입
+ *			  <K, V>		: Key, Value 약자 -> 컬랙션(map 자료)에 저장할 데이터 타입
+ *			  <N>			: Number 약자  -> 숫자와 관련된 데이터 타입
+ *			  <?>			: 와일드 카드  -> 타입에 대한 제한 없음
+ *			  <? extends T> : T 타입과 T 타입의 파생 타입만 사용
+ *			  <? super T> 	: T 타입과 T 타입의 상위 타입만 사용
+ */
+
+import java.util.*;
 
 public class Sample1 {
-	
-	private static File f;
-	
-	public static String[] getDirList(String path) {
-		/*
-		 *  지정한 디렉터리의 모든 파일 및 디렉터리 목록을 반환하는 메서드
-		 *  반환형은 문자열 배열
-		 *  단, 디렉터리만 반환한다. .isDirectory()
-		 */
-		f = new File(path);
-		
-		if(!f.exists()) {
-			System.out.println(path + " 에 해당하는 디렉터리 또는 파일이 존재하지 않습니다.");
-			return new String[] { "" };
-		}
-		
-		File[] fList = f.listFiles();
-		String[] sList = new String[fList.length];
-		int idx = 0;
-		for(int i = 0; i < fList.length; i++) {
-			if(fList[i].isDirectory()) {
-				sList[idx] = fList[i].getName();
-				idx++;
-			}
-		}
-		String[] res = new String[idx];
-		System.arraycopy(sList, 0, res, 0, idx);
-		return res;
-	}
-	
-	public static String[] getFileList(String path) {
-		/*
-		 *  지정한 디렉터리의 모든 파일 및 디렉터리 목록을 반환하는 메서드
-		 *  반환형은 문자열 배열
-		 *  단, 파일만 반환한다. .isFile()
-		 */
-		f = new File(path);
-		
-		if(!f.exists()) {
-			System.out.println(path + " 에 해당하는 디렉터리 또는 파일이 존재하지 않습니다.");
-			return new String[] { "" };
-		}
-		File[] fList = f.listFiles();
-		String[] sList = new String[fList.length];
-		int idx = 0;
-		for(int i = 0; i < fList.length; i++) {
-			if(fList[i].isFile()) {
-				sList[idx] = fList[i].getName();
-				idx++;
-			}
-		}
-		String[] res = new String[idx];
-		System.arraycopy(sList, 0, res, 0, idx);
-		return res;
-	}
-	
-	public static String[] getList(String path) {
-		/*
-		 *  지정한 디렉터리의 모든 파일 및 디렉터리 목록을 반환하는 메서드
-		 *  반환형은 문자열 배열
-		 *  단, 숨김 파일에 대해서는 반환하지 않게 만든다.
-		 */
-		f = new File(path);
-		
-		if(!f.exists()) {
-			System.out.println(path + " 에 해당하는 디렉터리 또는 파일이 존재하지 않습니다.");
-			return new String[] { "" };
-		}
-		File[] fList = f.listFiles();
-		String[] sList = new String[fList.length];
-		int idx = 0;
-		for(int i = 0; i < fList.length; i++) {
-			if(!fList[i].isHidden()) {
-				sList[idx] = fList[i].getName();
-				idx++;
-			}
-		}
-		String[] res = new String[idx];
-		System.arraycopy(sList, 0, res, 0, idx);
-		return res;
-	}
 
 	public static void main(String[] args) {
-		System.out.println(Arrays.toString(getList("C:/")));
-		System.out.println(Arrays.toString(getDirList("C:/")));
-		System.out.println(Arrays.toString(getFileList("C:/")));
-/*		File f = new File("C:/Sample.txt");
-		try {
-			f.createNewFile();
-		} catch (IOException e) {
-			System.out.println("IOException 에러 발생");
-		}
-		System.out.println(f.getName() + " 읽기 가능? : " + f.canRead());
-		System.out.println(f.getName() + " 쓰기 가능? : " + f.canWrite());
-		System.out.println(f.getName() + " 실행 가능? : " + f.canExecute());
-		System.out.println(f.getName() + " 디렉터리? : " + f.isDirectory());
-		System.out.println(f.getName() + " 파일? : " + f.isFile());
-		System.out.println(f.getName() + " 숨김? : " + f.isHidden());
-		System.out.println(f.getName() + " 크기(바이트)? : " + f.length());
-		System.out.println(f.getName() + " 마지막 수정날짜 : " + f.lastModified());
+		ArrayList<Integer> intList = new ArrayList<>();
+		ArrayList<String> strList = new ArrayList<>();
 		
-		f = new File("C:/");
-		String[] fileList = f.list();
-		for(int i = 0; i < fileList.length; i++) {
-			System.out.println(fileList[i]);
-		}
-		System.out.println("=========listFiles()=========");
-		File[] fList = f.listFiles();
-		for(int i = 0; i < fList.length; i++) {
-			System.out.println(fList[i] + "\t" + fList[i].isHidden() + "\t" + fList[i].length());
-		}
+		intList.add(1);		strList.add("A");
+		intList.add(2);		strList.add("B");
+		intList.add(3);		strList.add("C");
 		
-		f = new File("C:/newFolder");
-		f.mkdir();
-		
-		f = new File("C:/newFolder/sam");
-		f.mkdir();
-		
-		new File("C:/newFolder/sam").delete();*/
+		System.out.println(intList.toString() + " -> " + intList.get(0));
+		System.out.println(strList.toString() + " -> " + strList.get(1));
 	}
 
 }
