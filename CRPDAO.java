@@ -1,28 +1,31 @@
 package com.kh.CRP.model.dao;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Properties;
 
 public class CRPDAO {
-	
 	private String path;
+	private Properties prop;
+	private String[] keys = new String[] { "w", "l", "d" };
 	
 	public CRPDAO() {
-		this.path = "C:/score.txt";
+		this.path = "C:/Users/projava/score.txt";
+		this.prop = new Properties();
 	}
 	
 	public CRPDAO(String path) {
+		this();
 		this.path = path;
 	}
 	
 	public void save(int[] score) {
+		for(int i = 0; i < keys.length; i++) {
+			prop.setProperty(keys[i], Integer.toString(score[i]));
+		}
+		
 		File f = new File(path);
 		try {
-			FileWriter fw = new FileWriter(f);
-			fw.write(String.format("%d,%d,%d", score[0], score[1], score[2]));
-			fw.close();
+			prop.store(new FileWriter(f), "CRP Result");
 		} catch (IOException e) {
 			System.out.println("파일 입출력에 문제가 발생 했습니다.");
 		}
@@ -30,23 +33,18 @@ public class CRPDAO {
 	
 	public int[] load() {
 		File f = new File(path);
-		String[] score = new String[] { "0", "0", "0" };
-		int[] res = new int[3];
+		
 		try {
-			FileReader fr = new FileReader(f);
-			String strRead = "";
-			int len;
-			char[] buff = new char[32];
-			while((len = fr.read(buff)) != -1) {
-				strRead += new String(buff, 0, len);
-			}
-			score = strRead.split(",");
-			fr.close();
+			prop.load(new FileReader(f));
 		} catch (IOException e) {
 			System.out.println("파일 입출력에 문제가 발생 했습니다.");
 		}
-		for(int i = 0; i < score.length; i++) {
-			res[i] = Integer.parseInt(score[i]);
+		
+		int[] res = new int[3];
+		
+		// String[] keys = new String[] { "w", "l", "d" };
+		for(int i = 0; i < keys.length; i++) {
+			res[i] = Integer.parseInt(prop.getProperty(keys[i]));
 		}
 		return res;
 	}
