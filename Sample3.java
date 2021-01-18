@@ -1,91 +1,72 @@
 package com.kh.exam3;
 
-import java.util.*;
-
+class Bank implements Runnable {
+	private String name;
+	private int money;
+	private String who;
+	private int outMoney;
+	
+	public Bank(String name, int money) {
+		this.name = name;
+		this.money = money;
+	}
+	
+	// synchronized를 사용하지 않으면 멀티스레드 동작의 공유자원에 대한 접근이
+	// 동시에 이루어져, if 문의 조건 테스트가 모두 참으로 보게 되는 경우 후속 스레드에서
+	// 이미 변경된 값에 대해 1차 스케쥴에 의해 실행된 조건식 결과로 판단하여 2차 스케쥴에 의해
+	// 실행 될 때 문제가 발생.
+	public synchronized void moneyOut(String who, int money) {
+		// 누가 내 통장에 돈을 출금 했나?
+		if(this.money - money > 0) {
+			System.out.println(who + "이(가) " +  name + "님의 통장에서 " + money + "원을 출금했습니다.");
+			this.money -= money;
+		} else {
+			System.out.println("통장의 잔액이 부족합니다. 현재 잔액 : " + this.money);
+		}
+	}
+	
+	public void setWho(String who) {
+		this.who = who;
+	}
+	
+	public void setOutMoney(int money) {
+		this.outMoney = money;
+	}
+	
+	@Override
+	public void run() {
+		for(int i = 0; i < 10; i++) {
+			moneyOut(who, outMoney);
+		}
+	}
+}
 public class Sample3 {
 
 	public static void main(String[] args) {
-		/*
-		 * 	List 계열
-		 * 		- 순서 유지 및 중복 저장이 가능한 컬랙션
-		 * 		- ArrayList, Vector, LinkedList 가 있다.
-		 * 
-		 * 	ArrayList
-		 * 		- 단방향 포인터 구조로 자료에 대한 순차 접근에 강점을 가진다.
-		 * 
-		 * 	Vector
-		 * 		- 동기화(synchronized)된 메소드로 구성되어 멀티쓰레드 환경에서의
-		 * 		  안정성을 가진다.
-		 * 
-		 * 	LinkedList
-		 * 		- 양방향 포인터 구조로 데이터의 삽입, 삭제가 빈번한 경우 빠른 성능을
-		 * 		  보장하며, 앞/뒤로 검색이 가능하기 때문에 가장 빠른 검색이 가능한
-		 * 		  방향으로 접근하여 수정할 수 있다.
-		 */
+		Bank b1 = new Bank("홍길동", 50000);
 		
-		// ArrayList<Integer> lst = new ArrayList<>();
-		// Vector<Integer> lst = new Vector<>();
-		LinkedList<Integer> lst = new LinkedList<>();
+		b1.setWho("홍길동");
+		b1.setOutMoney(8000);
 		
-		// 데이터 추가
-		lst.add(10);		lst.add(20);		lst.add(30);
-		System.out.println(lst);
+		Thread t1 = new Thread(b1);
+		Thread t2 = new Thread(b1);
 		
-		lst.add(1, 15);				// 1 번 인덱스에 15 요소 추가
-		System.out.println(lst);
+		t1.start();
+		t2.start();
 		
-		lst.add(3, 25);				// 3 번 인덱스에 25 요소 추가
-		System.out.println(lst);
-		
-		lst.add(lst.size(), 35);	// 마지막 인덱스에 35 요소 추가
-		System.out.println(lst);
-		
-		// 데이터 수정
-		lst.set(0, 12);		lst.set(2, 22);		lst.set(4, 32);
-		System.out.println(lst);
-		
-		// 데이터 검색
-		System.out.println(lst.get(0) + ", " + lst.get(2) + ", " + lst.get(4));
-		System.out.println("12의 위치값 -> " + lst.indexOf(12));
-		System.out.println("22의 위치값 -> " + lst.indexOf(22));
-		System.out.println("32의 위치값 -> " + lst.indexOf(32));
-		System.out.println("42의 위치값 -> " + lst.indexOf(42));
-		
-		System.out.println("32가 존재하는가 -> " + lst.contains(32));
-		System.out.println("42가 존재하는가 -> " + lst.contains(42));
-		
-		System.out.println("빈 컬렉션인가 -> " + lst.isEmpty());
-		
-		// 데이터 삭제
-		//lst.remove(0);		lst.remove(1);		lst.remove(2);
-		//System.out.println(lst);
-		
-		//lst.remove(new Integer(15));
-		//System.out.println(lst);
-		
-		System.out.println(lst.subList(1, 4));
-		
-		// 리스트의 마지막 요소는 빼고 반복(foreach 반복)
-		for(int x: lst.subList(0, lst.size()-1)) {
-			System.out.print(x + " ");
+		while(true) {
+			if(Thread.State.RUNNABLE == t1.getState()) {
+				System.out.println(t1.getState() + " | " + t2.getState());
+			} else if(Thread.State.BLOCKED == t1.getState()) {
+				System.out.println(t1.getState() + " | " + t2.getState());
+			} else if(Thread.State.TERMINATED == t1.getState()) {
+				System.out.println("thread-1 : " + t1.getState());
+				break;
+			} else if(Thread.State.TERMINATED == t2.getState()) {
+				System.out.println("thread-2 : " + t2.getState());
+				break;
+			}
 		}
-		
-		System.out.println();
-		
-		// 리스트의 첫 요소는 빼고 반복(foreach 반복)
-		for(int x: lst.subList(1, lst.size())) {
-			System.out.print(x + " ");
-		}
-		
-		System.out.println();
-		
-		// 정렬
-		Collections.sort(lst);		// 오름차순
-		System.out.println(lst);
-		
-		Collections.reverse(lst);	// 내림차순
-		System.out.println(lst);
-		
 	}
 
 }
