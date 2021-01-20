@@ -1,72 +1,65 @@
 package com.kh.exam3;
 
-class Bank implements Runnable {
-	private String name;
-	private int money;
-	private String who;
-	private int outMoney;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import javax.swing.*;
+
+/*
+ * 	GUI를 사용하여 Local PC의 파일 또는 디럭터리의 정보를 보여주는 프로그램
+ * 	모든 내용은 라벨에 작성.
+ */
+
+class MainWindow {
+	private JFrame frm_main;
+	private ArrayList<JLabel> lblList;
 	
-	public Bank(String name, int money) {
-		this.name = name;
-		this.money = money;
+	public MainWindow() {
+		init();
 	}
 	
-	// synchronized를 사용하지 않으면 멀티스레드 동작의 공유자원에 대한 접근이
-	// 동시에 이루어져, if 문의 조건 테스트가 모두 참으로 보게 되는 경우 후속 스레드에서
-	// 이미 변경된 값에 대해 1차 스케쥴에 의해 실행된 조건식 결과로 판단하여 2차 스케쥴에 의해
-	// 실행 될 때 문제가 발생.
-	public synchronized void moneyOut(String who, int money) {
-		// 누가 내 통장에 돈을 출금 했나?
-		if(this.money - money > 0) {
-			System.out.println(who + "이(가) " +  name + "님의 통장에서 " + money + "원을 출금했습니다.");
-			this.money -= money;
-		} else {
-			System.out.println("통장의 잔액이 부족합니다. 현재 잔액 : " + this.money);
-		}
+	private void init() {
+		frm_main = new JFrame("Local PC");
+		frm_main.setSize(500, 400);
+		frm_main.setLayout(new BoxLayout(frm_main.getContentPane(), BoxLayout.Y_AXIS));
+		
+		lblList = new ArrayList<>();
 	}
 	
-	public void setWho(String who) {
-		this.who = who;
+	public void addLabel(String text) {
+		JLabel lbl = new JLabel(text);
+		lblList.add(lbl);
+		frm_main.add(lbl);
 	}
 	
-	public void setOutMoney(int money) {
-		this.outMoney = money;
-	}
-	
-	@Override
-	public void run() {
-		for(int i = 0; i < 10; i++) {
-			moneyOut(who, outMoney);
-		}
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
 	}
 }
+
 public class Sample3 {
 
 	public static void main(String[] args) {
-		Bank b1 = new Bank("홍길동", 50000);
-		
-		b1.setWho("홍길동");
-		b1.setOutMoney(8000);
-		
-		Thread t1 = new Thread(b1);
-		Thread t2 = new Thread(b1);
-		
-		t1.start();
-		t2.start();
-		
-		while(true) {
-			if(Thread.State.RUNNABLE == t1.getState()) {
-				System.out.println(t1.getState() + " | " + t2.getState());
-			} else if(Thread.State.BLOCKED == t1.getState()) {
-				System.out.println(t1.getState() + " | " + t2.getState());
-			} else if(Thread.State.TERMINATED == t1.getState()) {
-				System.out.println("thread-1 : " + t1.getState());
-				break;
-			} else if(Thread.State.TERMINATED == t2.getState()) {
-				System.out.println("thread-2 : " + t2.getState());
-				break;
+		MainWindow w = new MainWindow();
+		File f = new File("C:/Users/projava/eclipse-workspace");
+		if(f.exists()) {
+			w.addLabel("절대 경로 : " + f.getAbsolutePath());
+			w.addLabel("파일/디렉터리 : " + (f.isFile() ? "파일 " : "디렉터리"));
+			w.addLabel("숨김 : " + (f.isHidden() ? "예" : "아니오"));
+			w.addLabel("읽기 : " + (f.canRead() ? "예" : "아니오"));
+			w.addLabel("쓰기 : " + (f.canWrite() ? "예" : "아니오"));
+			w.addLabel("실행 : " + (f.canExecute() ? "예" : "아니오"));
+			if(f.isFile()) {
+				w.addLabel("파일 크기 : " + f.length() + "바이트 (" + (f.length() / 1024) + "KB)");
 			}
+			w.addLabel("수정일 : " + new SimpleDateFormat("YYYY년 MM월 dd일 a hh시 mm분 ss초")
+					.format(new Date(f.lastModified())));
+		} else {
+			w.addLabel("해당 파일 및 디렉터리가 존재하지 않습니다.");
 		}
+		
+		w.show();
 	}
 
 }
