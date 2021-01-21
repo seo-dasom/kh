@@ -1,109 +1,235 @@
 package com.kh.exam6;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+/*
+ * 	이벤트(Event)
+ * 		- 키보드나 마우스를 클릭하거나 움직이는 등의 동작을 이벤트라고 한다.
+ * 		- 이벤트가 발생했을 때 이를 처리하기 위한 객체로 Event Listener
+ * 		  또는 Event Adapter 가 있다.
+ * 		- 대표적인 이벤트 종류
+ * 			- ActionEvent	: 컴포넌트가 활성화될 때 발생하는 이벤트
+ * 			- ContainerEvent: 컨테이너에 컴포넌트가 추가/삭제될 때 발생하는 이벤트
+ * 			- FocusEvent	: 컴포넌트에 포커스가 들어오거나 나갈 때 발생하는 이벤트
+ * 			- MouseEvent	: 마우스를 움직이거나 클릭할 때 발생하는 이벤트
+ * 			- KeyEvent		: 키보드 입력에 의해 발생하는 이벤트
+ * 			- WindowEvent	: 윈도우 창의 활성 및 비활성화에 의해 발생하는 이벤트
+ * 
+ * 	EventListener
+ * 		- 발생 된 이벤트를 실질적으로 처리하기 위한 코드가 들어간다.
+ * 		- 인터페이스로 구현되어 있다.
+ * 
+ * 	EventAdapter
+ * 		- 발생 된 이벤트를 실질적으로 처리하기 위한 코드가 들어간다.
+ * 		- 리스너를 상속받아 추상 클래스로 구현되어 있다.
+ */
+
+class EventWindow1 {
+	private JFrame frm_main;
+	private JLabel lbl_print;
+	private JButton btn_event;
+	
+	public EventWindow1() {
+		init();
+		addEvent();
+	}
+	
+	public void init() {
+		frm_main = new JFrame("이벤트 테스트용");
+		frm_main.setSize(250, 200);
+		frm_main.setLayout(new BorderLayout());
+		
+		lbl_print = new JLabel("라벨 1");
+		btn_event = new JButton("버튼 1");
+		
+		Dimension size = new Dimension(250, 50);
+		lbl_print.setPreferredSize(size);
+		
+		frm_main.add(lbl_print, BorderLayout.NORTH);
+		frm_main.add(btn_event, BorderLayout.CENTER);
+	}
+	
+	private void addEvent() {
+		// 익명 클래스로 이벤트 즉석 생성 및 처리 -> 리스너 인터페이스 사용
+		btn_event.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// 컴포넌트에서 마우스를 눌렀다가 땠을 때 동작
+				lbl_print.setText("마우스 릴리즈 이벤트 발생!");
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// 컴포넌트에서 마우스를 누를 때 동작
+				lbl_print.setText("마우스 프레스 이벤트 발생!" + e.getButton());
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// 컴포넌트에서 빠져나갈 때 동작
+				lbl_print.setText("마우스 Exited 이벤트 발생!");
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// 컴포넌트에 진입할 때 동작
+				lbl_print.setText("마우스 진입 이벤트 발생!");
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 컴포넌트에서 마우스 클릭할 때 동작
+				lbl_print.setText("마우스 클릭 이벤트 발생!" + e.getX() + " | " + e.getY());
+			}
+		});
+	}
+	
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
+	}
+}
+
+class EventWindow2 {
+	private JFrame frm_main;
+	private JLabel lbl_print;
+	private JButton btn_event;
+	
+	public EventWindow2() {
+		init();
+		addEvent();
+	}
+	
+	public void init() {
+		frm_main = new JFrame("이벤트 테스트용");
+		frm_main.setSize(250, 200);
+		frm_main.setLayout(new BorderLayout());
+		
+		lbl_print = new JLabel("라벨 1");
+		btn_event = new JButton("버튼 1");
+		
+		Dimension size = new Dimension(250, 50);
+		lbl_print.setPreferredSize(size);
+		
+		frm_main.add(lbl_print, BorderLayout.NORTH);
+		frm_main.add(btn_event, BorderLayout.CENTER);
+	}
+	
+	private void addEvent() {
+		// 익명 클래스로 이벤트 즉석 생성 및 처리 -> 어댑터 사용
+		btn_event.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbl_print.setText(btn_event.getText() + "을 클릭하였습니다.");
+			}
+		});
+	}
+	
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
+	}
+}
+
+class EventWindow3 {
+	private JFrame frm_main;
+	private JLabel lbl_print;
+	private JButton btn_event;
+	
+	public EventWindow3() {
+		init();
+		addEvent();
+	}
+	
+	public void init() {
+		frm_main = new JFrame("이벤트 테스트용");
+		frm_main.setSize(250, 200);
+		frm_main.setLayout(new BorderLayout());
+		
+		lbl_print = new JLabel("라벨 1");
+		btn_event = new JButton("버튼 1");
+		
+		Dimension size = new Dimension(250, 50);
+		lbl_print.setPreferredSize(size);
+		
+		frm_main.add(lbl_print, BorderLayout.NORTH);
+		frm_main.add(btn_event, BorderLayout.CENTER);
+	}
+	
+	private class BtnClickAdapter extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			lbl_print.setText("버튼 클릭 이벤트 발생!!");
+		}
+	}
+	
+	private void addEvent() {
+		// 내부 클래스로 생성 및 처리
+		btn_event.addMouseListener(new BtnClickAdapter());
+	}
+	
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
+	}
+}
+
+// 독립적인 클래스로 생성 및 처리
+class BtnClickAdapter extends MouseAdapter {
+	private JLabel lbl_print;
+	
+	public BtnClickAdapter(JLabel label) {
+		lbl_print = label;
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		lbl_print.setText("버튼 클릭 이벤트 발생!!");
+	}
+}
+
+class EventWindow4 {
+	private JFrame frm_main;
+	private JLabel lbl_print;
+	private JButton btn_event;
+	
+	public EventWindow4() {
+		init();
+		addEvent();
+	}
+	
+	public void init() {
+		frm_main = new JFrame("이벤트 테스트용");
+		frm_main.setSize(250, 200);
+		frm_main.setLayout(new BorderLayout());
+		
+		lbl_print = new JLabel("라벨 1");
+		btn_event = new JButton("버튼 1");
+		
+		Dimension size = new Dimension(250, 50);
+		lbl_print.setPreferredSize(size);
+		
+		frm_main.add(lbl_print, BorderLayout.NORTH);
+		frm_main.add(btn_event, BorderLayout.CENTER);
+	}
+	
+	private void addEvent() {
+		btn_event.addMouseListener(new BtnClickAdapter(lbl_print));
+	}
+	
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
+	}
+}
 
 public class Sample6 {
 
 	public static void main(String[] args) {
-		/*
-		 * 	Map
-		 * 		- 키와 값의 쌍으로 구성된 객체를 저장(키, 값 모두 객체이다.)
-		 * 		- 키는 중복될 수 없으나 값은 중복 가능하다.
-		 * 		- 사전과 같은 형태의 자료구조이다.
-		 * 		- HashMap, Hashtable, LinkedHashMap, Properties, TreeMap
-		 */
-		
-		/*
-		 * 	HashMap
-		 * 
-		 * 	Hashtable
-		 * 		- HashMap 과 동일한 구조를 가지나 동기화된 메서드로 구성되어 있어
-		 * 		  멀티스레드 환경에서의 안정성을 가진다.
-		 */
-		
-		HashMap<String, Integer> hm = new HashMap<>();
-		
-		// 추가
-		hm.put("가", 10);	hm.put("나", 20);	hm.put("다", 30);
-		System.out.println(hm);
-		
-		// 수정(동일한 키를 사용하면 됨)
-		hm.put("가", 40);	hm.put("나", 40);
-		System.out.println(hm);
-		
-		// 키 검색
-		System.out.println("키 검색 -> " + hm.containsKey("가"));
-		System.out.println("키 검색 -> " + hm.containsKey("마"));
-		
-		// 값 검색
-		System.out.println("값 검색 -> " + hm.containsValue(30));
-		System.out.println("값 검색 -> " + hm.containsValue(10));
-		
-		// 키/값 쌍 추출
-		Set<Map.Entry<String, Integer>> entry = hm.entrySet();
-		for(Map.Entry<String, Integer> m: entry) {
-			System.out.println(m.getKey() + " | " + m.getValue());
-		}
-		
-		// 키만 추출
-		Set<String> keys = hm.keySet();
-		System.out.println(keys);
-		
-		// 값만 추출
-		ArrayList<Integer> values = new ArrayList<>(hm.values());
-		System.out.println(values);
-		
-		// 크기
-		System.out.println(hm.size());
-		
-		// 삭제
-		int res = hm.remove("가");
-		System.out.println(hm + " | " + res);
-		
-		if(hm.remove("가") == null) {
-			System.out.println("이미 삭제 되었습니다.");
-		}
-		
-		/*
-		 * 	Properties
-		 * 		- 키와 값의 데이터 타입을 String 으로 제한되어 있다.
-		 * 		- 프로퍼티 파일에 대한 데이터 처리를 할 때 주로 사용
-		 * 		  프로퍼티 파일 : 특정 프로그램이 동작할 때 추가로 적용할, 또는
-		 * 						  기본적으로 적용된 속성이 저장된 파일
-		 */
-		Properties prop = new Properties();
-		
-		// 추가/수정
-		prop.setProperty("가", "10");
-		prop.setProperty("나", "20");
-		prop.setProperty("다", "30");
-		System.out.println(prop);
-		
-		// 검색
-		System.out.println(prop.getProperty("가"));
-		
-		// 파일로 저장
-		try {
-			prop.store(new FileWriter(new File("C:/Users/projava/program.ini")), "프로퍼티 파일");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		// 저장된 프로퍼티 불러오기
-		try {
-			prop.load(new FileReader(new File("C:/Users/projava/program2.ini")));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println(prop);
+		new EventWindow4().show();
 	}
 
 }

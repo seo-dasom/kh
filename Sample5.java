@@ -1,102 +1,122 @@
 package com.kh.exam5;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.TreeSet;
+import java.awt.*;
+import javax.swing.*;
+
+class LoginWindow {
+	private JFrame frm;
+	
+	public LoginWindow() {
+		init();
+	}
+	
+	public void init() {
+		frm = new JFrame("Login");
+		frm.setSize(new Dimension(360, 120));
+		frm.setLayout(new BorderLayout());
+		
+		JPanel pan_input = new JPanel(new BorderLayout());
+		JPanel pan_button = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		frm.add(pan_input, BorderLayout.NORTH);
+		frm.add(pan_button, BorderLayout.CENTER);
+		
+		JPanel pan_user = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		JPanel pan_pass = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		pan_input.add(pan_user, BorderLayout.NORTH);
+		pan_input.add(pan_pass, BorderLayout.CENTER);
+		
+		JLabel lbl_username = new JLabel("Username :");
+		JTextField txt_username = new JTextField();
+		JLabel lbl_password = new JLabel("Password :");
+		JTextField txt_password = new JTextField();
+		
+		pan_user.add(lbl_username);	pan_user.add(txt_username);
+		pan_pass.add(lbl_password);	pan_pass.add(txt_password);
+		
+		JButton btn_login = new JButton("Login");
+		JButton btn_cancel = new JButton("Cancel");
+		pan_button.add(btn_login);	pan_button.add(btn_cancel);
+		
+		Dimension s = txt_username.getPreferredSize();
+		s.setSize(275, s.getHeight());
+		txt_username.setPreferredSize(s);
+		txt_password.setPreferredSize(s);
+		
+	}
+	
+	public void show() {
+		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm.setResizable(false);
+		frm.setVisible(true);
+	}
+}
+
+class CalculatorWindow {
+	private JFrame calf;
+	
+	public CalculatorWindow() {
+		init();
+	}
+	
+	public void init() {
+		calf = new JFrame("계산기");
+		calf.setSize(new Dimension(270, 400));
+		calf.setLayout(new GridLayout(6, 4));
+		
+		TextField input = new TextField();
+//		calf.add(new JButton("MC"));
+//		calf.add(new JButton("MR"));
+//		calf.add(new JButton("M+"));
+//		calf.add(new JButton("M-"));
+//		calf.add(new JButton("MS"));
+//		calf.add(new JButton("M^"));
+		calf.add(new JButton("%"));
+		calf.add(new JButton("√"));
+		calf.add(new JButton("x2"));
+		calf.add(new JButton("1/x"));
+		calf.add(new JButton("CE"));
+		calf.add(new JButton("C"));
+		calf.add(new JButton("<-"));
+		calf.add(new JButton("÷"));
+		calf.add(new JButton("7"));
+		calf.add(new JButton("8"));
+		calf.add(new JButton("9"));
+		calf.add(new JButton("×"));
+		calf.add(new JButton("4"));
+		calf.add(new JButton("5"));
+		calf.add(new JButton("6"));
+		calf.add(new JButton("-"));
+		calf.add(new JButton("1"));
+		calf.add(new JButton("2"));
+		calf.add(new JButton("3"));
+		calf.add(new JButton("+"));
+		calf.add(new JButton("±"));
+		calf.add(new JButton("0"));
+		calf.add(new JButton("."));
+		calf.add(new JButton("="));
+		
+		
+		JTextField txt = new JTextField();
+		
+		txt.setText("0");
+		
+	}
+	
+	public void show() {
+		calf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		calf.setResizable(false);
+		calf.setVisible(true);
+	}
+}
 
 public class Sample5 {
 
 	public static void main(String[] args) {
-		/*
-		 * 	Set
-		 * 		- 데이터를 순서대호 저장하지 않으며, 중복 데이터를 저장할 수 없다.
-		 * 		- 인덱스를 사용하지 않기 때문에 인덱스를 매개변수로 사용하는 메서드가 없다.
-		 */
+		CalculatorWindow cal = new CalculatorWindow();
+		cal.show();
 		
-		HashSet<String> hs = new HashSet<>();
-		
-		// 비어 있는지 확인
-		System.out.println(hs.isEmpty());
-		
-		// 추가
-		hs.add("가");	hs.add("나");	hs.add("다");	hs.add("라");
-		System.out.println(hs);
-		
-		hs.add("나");			// 중복 데이터 처리x
-		System.out.println(hs);	// 변화 없음
-		
-		// 데이터 수 확인
-		System.out.println(hs.size());
-		
-		// 검색
-		System.out.println("가 존재? - > " + hs.contains("가"));
-		System.out.println("마 존재? - > " + hs.contains("마"));
-		
-		// HashSet을 String 배열로 변환
-		String[] sArr = new String[hs.size()];
-		hs.toArray(sArr);
-		
-		System.out.println("문자열 배열로 변환하여 0번 인덱스 출력 -> " + sArr[0]);
-		
-		// HashSet을 ArrayList로 변환
-		sArr = new String[hs.size()];
-		hs.toArray(sArr);
-		
-		ArrayList<String> al = new ArrayList<>(Arrays.asList(sArr));
-		// ArrayList<String> al = new ArrayList<>(Arrays.asList(hs.toArray(new String[hs.size()])));
-		System.out.println("ArrayList로 변환하여 1번 인덱스 출력 -> " + al.get(1));
-		
-		// 삭제
-		hs.remove("나");
-		System.out.println(hs);
-		
-		
-		/*
-		 * 	LinkedHashSet
-		 * 		- 추가된 데이터의 순서를 유지 해준다.
-		 */
-		LinkedHashSet<String> lhs = new LinkedHashSet<>();
-		lhs.add("가");	lhs.add("다");	lhs.add("나");	lhs.add("라");
-		System.out.println(lhs);
-		
-		for(String s: lhs) {
-			System.out.println("foreach -> " + s);
-		}
-		
-		//iterator(반복자) 메서드
-		Iterator<String> itor = lhs.iterator();
-		// itor.hasNext() -> 반복 할 객체가 있는지 확인
-		while(itor.hasNext()) {
-			// itor.next() 객체를 추출
-			System.out.println("iterator -> " + itor.next());
-		}
-		
-		
-		/*
-		 * 	TreeSet
-		 * 		- 정렬 기능이 추가된 Set 객체
-		 * 		- HashSet 보다 성능상 느리지만 객체 추가와 동시에 (오름차순)정렬이 이루어 진다.
-		 */
-		TreeSet<String> ts = new TreeSet<>();
-		ts.add("라");	ts.add("다");	ts.add("가");	ts.add("나");
-		System.out.println(ts);
-		System.out.println(ts.descendingSet());		// 내림차순 정렬
-		
-		System.out.print("오름차순 출력 : -> ");
-		for(String s: ts) {
-			System.out.print(s + " ");
-		}
-		System.out.println();
-		
-		System.out.print("내림차순 출력 : -> ");
-		for(String s: ts.descendingSet()) {
-			System.out.print(s + " ");
-		}
-		System.out.println();
-		
+//		LoginWindow lo = new LoginWindow();
+//		lo.show();
 	}
 
 }

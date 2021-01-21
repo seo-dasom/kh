@@ -1,87 +1,158 @@
 package com.kh.exam4;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 /*
- *	로또 자동 추출 프로그램 만들기
- *		- 1 ~ 45 까지의 랜덤 정수를 6개 생성
- *		- 생성된 정수는 리스트 컬랙션에 저장(중복 데이터는 없어야 한다.)
- *		- 자동, 반자동 기능을 넣도록 한다.
- *			자동 : 6개의 정수가 모두 랜덤 생성
- *			반자동 : 일부 정수를 매개변수로 받고 나머지 정수값을 랜덤 생성
- *
- *	계획 세우기
- *		- 필요한 멤버 필드 작성
- *		- 필요한 멤버 메서드 작성(매개변수 타입, 값 / 반환 타입, 값)
- *		- 클래스 사용 방식 -> 생성자
- *
- *	추가 기능 구현
- *		- 생성된 로또 번호를 파일로 출력할 수 있게 하시오.
+ * 	Layout
+ * 		- 컴포넌트를 배치하기 위한 방법이 정의된 것
+ * 	
+ * 	FlowLayout
+ * 		- 컴포넌트를 배치할 때 왼쪽에서 오른쪽으로 순차 배치
+ * 		  또는 오른쪽에서 왼쪽으로 순차 배치
+ * 		- 컴포넌트를 배치할 때 가운데에 위치하도록 배치
+ * 		- 창의 크기를 넘기는 컴포넌트들이 사용되면 다음 줄로 자동 배치가 된다.
+ * 
+ * 	BorderLayout
+ * 		- 컨테이너의 영역을 동, 서, 남, 북, 중앙 다섯 개의 영역으로 나누어 컴포넌트를 배치
+ * 
+ * 	GridLayout
+ * 		- 주어진 row, col의 크기로 컨테이너 영역을 나누어 컴포넌트를 배치
+ * 
+ * 	BoxLayout
+ * 		- 컴포넌트를 가로 또는 세로 방향으로 배치
+ * 		- 영역을 채우는 형태로 배치
+ * 
+ * 	CardLayout
+ * 		- 여러장의 카드를 겹쳐 놓은 형태로 컴포넌트를 배치
+ * 
+ * 	GridBagLayout
+ * 		- GridLayout과 동일하나 여러 셀을 차지하는 형태로 구성을 할 수 있다.
  */
 
-import java.util.Random;
+import javax.swing.*;
+import java.awt.*;
 
-class Lotto {
-	private Random rand = new Random();
-	private ArrayList<Integer> numbers;
+class FlowWindow {
+	private JFrame frm_main;
 	
-	public Lotto() {
-		numbers = new ArrayList<>();
+	public FlowWindow() {
+		init();
 	}
 	
-	// 가변 매개변수
-	public Lotto(int... nums) {
-		this();
-		addArray(nums);
-	}
-	
-	private void addArray(int[] nums) {
-		for(int i = 0; i < nums.length; i++) {
-			if(i >= 6) {
-				break;
-			}
-			numbers.add(nums[i]);
-		}
-	}
-	
-	private int generate() {
-		int num;
-		do {
-			num = rand.nextInt(45) + 1;
-		} while(numbers.contains(num));
-		return num;
-	}
-
-	public ArrayList<Integer> getLotto() {
-		while(numbers.size() < 6) {
-			numbers.add(generate());
-		}
-		Collections.sort(numbers);
-		return numbers;
-	}
-	
-	// 수정할 것
-	public ArrayList<Integer> getLotto(int... nums) {
-		numbers = new ArrayList<Integer>();
-		addArray(nums);
-		return getLotto();
+	public void init() {
+		frm_main = new JFrame("FlowLayout Window");
+		frm_main.setSize(250, 200);
+		// FlowLayout.LEFT, FlowLayout.RIGHT, FlowLayout.CENTER
+		frm_main.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 10));
 		
+		frm_main.add(new JButton("버튼 1"));
+		frm_main.add(new JButton("버튼 2"));
+		frm_main.add(new JButton("버튼 3"));
+		frm_main.add(new JButton("버튼 4"));
+		frm_main.add(new JButton("버튼 5"));
 	}
 	
-	public void clear() {
-		numbers.clear();
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
+	}
+}
+
+class BorderWindow {
+	private JFrame frm_main;
+	
+	public BorderWindow() {
+		init();
+	}
+	
+	public void init() {
+		frm_main = new JFrame("BorderLayout Window");
+		frm_main.setSize(250, 200);
+		frm_main.setLayout(new BorderLayout());
+		
+		frm_main.add(new JButton("버튼 1"), BorderLayout.NORTH);
+		frm_main.add(new JButton("버튼 2"), BorderLayout.EAST);
+		frm_main.add(new JButton("버튼 3"), BorderLayout.SOUTH);
+		frm_main.add(new JButton("버튼 4"), BorderLayout.WEST);
+		frm_main.add(new JButton("버튼 5"), BorderLayout.CENTER);
+	}
+	
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
+	}
+}
+
+class BorderFlowWindow {
+	private JFrame frm_main;
+	
+	public BorderFlowWindow() {
+		init();
+	}
+	
+	public void init() {
+		// 컨테이너에 컨테이너를 추가하여 사용
+		frm_main = new JFrame("BorderFlowLayout Window");
+		frm_main.setSize(250, 200);
+		frm_main.setLayout(new BorderLayout());
+		
+		// Panel 컨테이너 추가
+		JPanel pan = new JPanel();
+		pan.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		frm_main.add(pan, BorderLayout.NORTH);
+		pan.add(new JButton("버튼 1-1"));
+		pan.add(new JButton("버튼 1-2"));
+		pan.add(new JButton("버튼 1-3"));
+		
+		frm_main.add(new JButton("버튼 2"), BorderLayout.EAST);
+		frm_main.add(new JButton("버튼 3"), BorderLayout.SOUTH);
+		frm_main.add(new JButton("버튼 4"), BorderLayout.WEST);
+		frm_main.add(new JButton("버튼 5"), BorderLayout.CENTER);
+	}
+	
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
+	}
+}
+
+class GridWindow {
+	private JFrame frm_main;
+	
+	public GridWindow() {
+		init();
+	}
+	
+	public void init() {
+		frm_main = new JFrame("GridLayout Window");
+		frm_main.setSize(250, 200);
+		frm_main.setLayout(new GridLayout(2, 3));
+		
+		frm_main.add(new JButton("버튼 1"));
+		frm_main.add(new JButton("버튼 2"));
+		frm_main.add(new JButton("버튼 3"));
+		frm_main.add(new JButton("버튼 4"));
+		frm_main.add(new JButton("버튼 5"));
+	}
+	
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setVisible(true);
 	}
 }
 
 public class Sample4 {
 
 	public static void main(String[] args) {
-		Lotto l = new Lotto();
-		System.out.println(l.getLotto(3, 6, 18));
-		System.out.println(l.getLotto(8, 13));
-		System.out.println(l.getLotto(9));
+		GridWindow grid = new GridWindow();
+		grid.show();
+		
+//		BorderFlowWindow borderflow = new BorderFlowWindow();
+//		borderflow.show();
+		
+//		BorderWindow border = new BorderWindow();
+//		border.show();
+		
+//		FlowWindow flow = new FlowWindow();
+//		flow.show();
 	}
 
 }
