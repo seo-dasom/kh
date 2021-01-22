@@ -1,130 +1,140 @@
 package com.kh.exam7;
 
+import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
+import javax.swing.*;
 
-class Student {
-	private String name;
-	private char gender;
-	private int classLevel;
-	private int classNumber;
-	private int classId;
+class CalcWindow {
+	private JFrame frm_main;
+	private JLabel lbl_print;
+	private HashMap<String, JButton> hmButtons = new HashMap<>();
+	private double num1, num2;
+	private String oper;
+	private Font font = new Font("맑은고딕", Font.PLAIN, 24);
 	
-	public Student(String name, char gender, int lvl, int num, int id) {
-		this.name = name;
-		this.gender = gender;
-		this.classLevel = lvl;
-		this.classNumber = num;
-		this.classId = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public char getGender() {
-		return gender;
-	}
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
-	public int getClassLevel() {
-		return classLevel;
-	}
-	public void setClassLevel(int classLevel) {
-		this.classLevel = classLevel;
-	}
-	public int getClassNumber() {
-		return classNumber;
-	}
-	public void setClassNumber(int classNumber) {
-		this.classNumber = classNumber;
-	}
-	public int getClassId() {
-		return classId;
-	}
-	public void setClassId(int classId) {
-		this.classId = classId;
-	}
-	@Override
-	public String toString() {
-		return "<Student: name=\"" + name + "\">";
-	}
-}
-
-class Grade {
-	private String subject;
-	private double score;
-	
-	public Grade(String subject) {
-		this.subject = subject;
-	}
-	public Grade(String subject, double score) {
-		this.subject = subject;
-		this.score = score;
-	}
-	public Grade(String subject, int score) {
-		this.subject = subject;
-		this.score = (double)score;
-	}
-	public String getSubject() {
-		return subject;
-	}
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-	public double getScore() {
-		return score;
-	}
-	public void setScore(double score) {
-		this.score = score;
-	}
-	@Override
-	public String toString() {
-		return "<Grade: subject=\"" + subject + "\">";
+	public CalcWindow() {
+		init();
+		addEvent();
 	}
 	
+	private void createNumberButton() {
+		for(int i = 0; i < 10; i++) {
+			hmButtons.put(Integer.toString(i), new JButton(Integer.toString(i)));
+			hmButtons.get(Integer.toString(i)).setFont(font);
+		}
+		hmButtons.put("±", new JButton("±"));
+		hmButtons.put(".", new JButton("."));
+		hmButtons.put("+", new JButton("+"));
+		hmButtons.put("-", new JButton("-"));
+		hmButtons.put("×", new JButton("×"));
+		hmButtons.put("=", new JButton("="));
+		hmButtons.put("÷", new JButton("÷"));
+		hmButtons.put("CE", new JButton("CE"));
+		hmButtons.put("C", new JButton("C"));
+		hmButtons.put("◁", new JButton("◁"));
+	}
+	
+	public void init() {
+		frm_main = new JFrame("계산기");
+		frm_main.setSize(350, 500);
+		frm_main.setLayout(new BorderLayout());
+		
+		JPanel pan_numPad = new JPanel(new GridLayout(5, 4, 3, 3));
+		frm_main.add(pan_numPad, BorderLayout.CENTER);
+		createNumberButton();
+		
+		pan_numPad.add(hmButtons.get("CE"));
+		pan_numPad.add(hmButtons.get("C"));
+		pan_numPad.add(hmButtons.get("◁"));
+		pan_numPad.add(hmButtons.get("÷"));
+		
+		pan_numPad.add(hmButtons.get("7"));
+		pan_numPad.add(hmButtons.get("8"));
+		pan_numPad.add(hmButtons.get("9"));
+		pan_numPad.add(hmButtons.get("×"));
+		
+		pan_numPad.add(hmButtons.get("4"));
+		pan_numPad.add(hmButtons.get("5"));
+		pan_numPad.add(hmButtons.get("6"));
+		pan_numPad.add(hmButtons.get("-"));
+		
+		pan_numPad.add(hmButtons.get("1"));
+		pan_numPad.add(hmButtons.get("2"));
+		pan_numPad.add(hmButtons.get("3"));
+		pan_numPad.add(hmButtons.get("+"));
+		
+		pan_numPad.add(hmButtons.get("±"));
+		pan_numPad.add(hmButtons.get("0"));
+		pan_numPad.add(hmButtons.get("."));
+		pan_numPad.add(hmButtons.get("="));
+		
+		lbl_print = new JLabel("0");
+		lbl_print.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		lbl_print.setPreferredSize(new Dimension(250, 50));
+		
+		frm_main.add(lbl_print, BorderLayout.NORTH);
+	}
+	
+	// 내부 클래스로 생성 및 처리
+	private class BtnClickAdapter extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JButton btn = (JButton)e.getSource();
+			lbl_print.setText(lbl_print.getText() + btn.getText());
+		}
+	}
+	
+	private class BtnOperAdapter extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JButton btn = (JButton)e.getSource();
+			if(btn.getText().equals("=")) {
+				switch(oper) {
+					case "+":
+						lbl_print.setText("" + (num1 + Double.parseDouble(lbl_print.getText())));
+						break;
+					case "-":
+						lbl_print.setText("" + (num1 - Double.parseDouble(lbl_print.getText())));
+						break;
+					case "×":
+						lbl_print.setText("" + (num1 * Double.parseDouble(lbl_print.getText())));
+						break;
+					case "÷":
+						lbl_print.setText("" + (num1 / Double.parseDouble(lbl_print.getText())));
+						break;
+				}
+			}
+			num1 = Double.parseDouble(lbl_print.getText());
+			oper = btn.getText();
+			lbl_print.setText("");
+		}
+	}
+	
+	private void addEvent() {
+		for(int i = 0; i < 10; i++) {
+			hmButtons.get(Integer.toString(i)).addMouseListener(new BtnClickAdapter());
+		}
+		hmButtons.get("+").addMouseListener(new BtnOperAdapter());
+		hmButtons.get("-").addMouseListener(new BtnOperAdapter());
+		hmButtons.get("×").addMouseListener(new BtnOperAdapter());
+		hmButtons.get("÷").addMouseListener(new BtnOperAdapter());
+		hmButtons.get("=").addMouseListener(new BtnOperAdapter());
+		
+	}
+	
+	public void show() {
+		frm_main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm_main.setResizable(false);
+		frm_main.setVisible(true);
+	}
 }
 
 public class Sample7 {
 
 	public static void main(String[] args) {
-		ArrayList<Student> stdList = new ArrayList<>();
-		stdList.add(new Student("홍길동", '남', 1, 1, 25));
-		stdList.add(new Student("박지은", '여', 1, 2, 13));
-		stdList.add(new Student("김주한", '남', 2, 1, 5));
-		stdList.add(new Student("김규리", '여', 2, 3, 19));
-		
-		System.out.println(stdList);
-		
-		System.out.println(stdList.get(0));
-		System.out.println(stdList.get(1));
-		System.out.println(stdList.get(2));
-		
-		
-		ArrayList<Grade> grdList1 = new ArrayList<>();
-		grdList1.add(new Grade("수학", 60));
-		grdList1.add(new Grade("과학", 70));
-		grdList1.add(new Grade("국어", 80));
-		grdList1.add(new Grade("영어", 85));
-		
-		System.out.println(grdList1);
-		
-		System.out.println(grdList1.get(0));
-		System.out.println(grdList1.get(1));
-		
-		ArrayList<Grade> grdList2 = new ArrayList<>();
-		grdList1.add(new Grade("수학", 75));
-		grdList1.add(new Grade("과학", 84));
-		grdList1.add(new Grade("국어", 79));
-		grdList1.add(new Grade("영어", 85));
-		
-		
-		HashMap<Student, ArrayList<Grade>> stdInfo = new HashMap<>();
-		stdInfo.put(new Student("홍길동", '남', 1, 1, 25), grdList1);
-		stdInfo.put(new Student("박지은", '여', 1, 2, 13), grdList2);
-		
-		System.out.println(stdInfo);
+		new CalcWindow().show();
 	}
 
 }

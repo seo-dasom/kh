@@ -51,72 +51,11 @@ class LoginWindow {
 	}
 }
 
-class CalculatorWindow {
-	private JFrame calf;
-	
-	public CalculatorWindow() {
-		init();
-	}
-	
-	public void init() {
-		calf = new JFrame("계산기");
-		calf.setSize(new Dimension(270, 400));
-		calf.setLayout(new GridLayout(6, 4));
-		
-		TextField input = new TextField();
-//		calf.add(new JButton("MC"));
-//		calf.add(new JButton("MR"));
-//		calf.add(new JButton("M+"));
-//		calf.add(new JButton("M-"));
-//		calf.add(new JButton("MS"));
-//		calf.add(new JButton("M^"));
-		calf.add(new JButton("%"));
-		calf.add(new JButton("√"));
-		calf.add(new JButton("x2"));
-		calf.add(new JButton("1/x"));
-		calf.add(new JButton("CE"));
-		calf.add(new JButton("C"));
-		calf.add(new JButton("<-"));
-		calf.add(new JButton("÷"));
-		calf.add(new JButton("7"));
-		calf.add(new JButton("8"));
-		calf.add(new JButton("9"));
-		calf.add(new JButton("×"));
-		calf.add(new JButton("4"));
-		calf.add(new JButton("5"));
-		calf.add(new JButton("6"));
-		calf.add(new JButton("-"));
-		calf.add(new JButton("1"));
-		calf.add(new JButton("2"));
-		calf.add(new JButton("3"));
-		calf.add(new JButton("+"));
-		calf.add(new JButton("±"));
-		calf.add(new JButton("0"));
-		calf.add(new JButton("."));
-		calf.add(new JButton("="));
-		
-		
-		JTextField txt = new JTextField();
-		
-		txt.setText("0");
-		
-	}
-	
-	public void show() {
-		calf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		calf.setResizable(false);
-		calf.setVisible(true);
-	}
-}
-
 public class Sample5 {
 
 	public static void main(String[] args) {
-		CalculatorWindow cal = new CalculatorWindow();
-		cal.show();
-		
-//		LoginWindow lo = new LoginWindow();
-//		lo.show();
+		LoginWindow lo = new LoginWindow();
+		lo.show();
 	}
 
 }

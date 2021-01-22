@@ -187,7 +187,8 @@ class BtnClickAdapter extends MouseAdapter {
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		lbl_print.setText("버튼 클릭 이벤트 발생!!");
+		String text = ((JButton)e.getSource()).getText();
+		lbl_print.setText(text + " 버튼 클릭 이벤트 발생!!");
 	}
 }
 
