@@ -18,23 +18,19 @@ class MemoWindow {
 		
 		main = new JFrame("메모장");
 		main.setSize(700, 600);
-		ImageIcon img = new ImageIcon("C:/Users/projava/eclipse-workspace/seodasom_repo/img/MemoImage.png");
+		
+		ImageIcon img = new ImageIcon("../img/MemoImage.png");
 		main.setIconImage(img.getImage());
 		
 		JTextArea textArea = new JTextArea("", 5, 10);
 		textArea.setFont(new Font("", Font.PLAIN, 16));
 		
 		JScrollPane scrollBar = new JScrollPane(textArea);
-		scrollBar.addMouseWheelListener(new MouseWheelListener() {
-			public void mouseWheelMoved(MouseWheelEvent e) {
-			}
-		});
+		main.add(scrollBar, "Center");
 		
 		JMenuBar menuBar = new JMenuBar();
 		main.setJMenuBar(menuBar);
 		menuBar.setBackground(Color.WHITE);
-		
-		main.add(scrollBar, "Center");
 		
 		m1 = new JMenu("파일");
 		menuBar.add(m1);
@@ -48,9 +44,9 @@ class MemoWindow {
 		JMenuItem fileSave =new JMenuItem("저장(S)");
 		fileSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 		
-		JMenuItem fileExit = new JMenuItem("종료(X)");
-		fileExit.setMnemonic(KeyEvent.VK_X);
-		fileExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+		JMenuItem fileExit = new JMenuItem("종료(E)");
+		fileExit.setMnemonic(KeyEvent.VK_E);
+		fileExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		
 		// 열기
 		JFileChooser chooser = new JFileChooser();
@@ -175,7 +171,7 @@ class MemoWindow {
 			}
 		});
 		
-		// 자르기 (자른내용 붙여넣기 가능)
+		// 자르기 (자른내용 붙여넣기)
 		cut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -223,6 +219,11 @@ class MemoWindow {
 		
 		JMenuItem calc = new JMenuItem("계산기(M)");
 		calc.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.CTRL_MASK));
+		
+		JMenuItem paint = new JMenuItem("그림판(P)");
+		paint.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+		
+		// 계산기
 		calc.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -237,8 +238,7 @@ class MemoWindow {
 			}
 		});
 		
-		JMenuItem paint = new JMenuItem("그림판(P)");
-		paint.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+		// 그림판
 		paint.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
