@@ -333,6 +333,23 @@ WHERE department_id IS NOT NULL
 GROUP BY CUBE(department_id)
 ORDER BY department_id NULLS LAST;
 
+/* ROLLUP 집계 함수 -> 두개 이상의 컬럼을 그룹화 하여 집계한 예제 */
+SELECT department_id, job_id,
+       SUM(salary) AS "부서별총급여"
+FROM employees
+WHERE department_id IS NOT NULL
+GROUP BY ROLLUP(department_id, job_id)
+ORDER BY department_id NULLS LAST, job_id NULLS LAST;
+
+
+/* CUBE -> 두개 이상의 컬럼만 그룹화 하여 집계한 예제 */
+SELECT department_id, job_id,
+       SUM(salary) AS "부서별총급여"
+FROM employees
+WHERE department_id IS NOT NULL
+GROUP BY CUBE(department_id, job_id)
+ORDER BY department_id NULLS LAST, job_id NULLS LAST;
+
 
 /* 년도별 입사자 수를 집계 하시오. */
 SELECT TO_CHAR(hire_date, 'YYYY') AS "년도",
